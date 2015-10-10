@@ -1,5 +1,4 @@
 .bundle/
-vendor/bundle/
 .ruby-version
 .ruby-gemset
 .rvmrc
@@ -8,3 +7,4 @@ gems
 .DS_store
 *.log
 *scratch.*
+materials

@@ -6,6 +6,7 @@ puts RUBY_DESCRIPTION
 
 require_relative '../init.rb'
 
+require 'runner'
 require 'telemetry/errors/controls'
 
 TestLogger = Telemetry::Logger.get 'Test Output'
