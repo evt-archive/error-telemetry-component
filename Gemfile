@@ -1,33 +1,22 @@
-require './prox_gem'
+source 'https://gem.fury.io/obsidian/' do
+  gem 'casing'
+  gem 'clock'
+  gem 'connection'
+  gem 'controls'
+  gem 'dependency'
+  gem 'http-protocol'
+  gem 'identifier-uuid'
+  gem 'raygun_client'
+  gem 'schema'
+  gem 'telemetry-logger'
+end
 
 source 'https://rubygems.org'
 
-gem 'inclusion'
+gem 'minitest'
+gem 'minitest-spec-context'
+gem 'runner'
 
-group :development, :testing do
-  gem 'minitest', '~> 5.5.0'
-  gem 'minitest-spec-context', '0.0.3'
+group :debug do
   gem 'pry'
 end
-
-prox_gem 'telemetry_logger'
-prox_gem 'clock'
-prox_gem 'dependency'
-prox_gem 'subst_attr'
-prox_gem 'attribute'
-prox_gem 'uuid'
-prox_gem 'set_attributes'
-prox_gem 'event_store_client_http'
-prox_gem 'settings'
-prox_gem 'schema'
-prox_gem 'virtual'
-prox_gem 'casing'
-prox_gem 'event_store_messaging'
-prox_gem 'event_store_entity_projection'
-prox_gem 'event_store_entity_store'
-prox_gem 'runner'
-prox_gem 'fixture'
-prox_gem 'account_interface'
-prox_gem 'http_protocol'
-prox_gem 'connection'
-prox_gem 'process_host'
