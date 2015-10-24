@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'connection'
   s.add_runtime_dependency 'controls'
   s.add_runtime_dependency 'dependency'
+  s.add_runtime_dependency 'event_store-entity_store'
   s.add_runtime_dependency 'http-protocol'
   s.add_runtime_dependency 'identifier-uuid'
   s.add_runtime_dependency 'raygun_client'

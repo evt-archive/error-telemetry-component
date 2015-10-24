@@ -4,6 +4,7 @@ source 'https://gem.fury.io/obsidian/' do
   gem 'connection'
   gem 'controls'
   gem 'dependency'
+  gem 'event_store-messaging'
   gem 'http-protocol'
   gem 'identifier-uuid'
   gem 'raygun_client'
