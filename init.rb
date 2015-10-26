@@ -1,7 +1,4 @@
-unless ENV['DISABLE_BUNDLER'] == 'on'
-  require 'bundler'
-  Bundler.setup
-end
+require 'bundler/setup' unless ENV['DISABLE_BUNDLER'] == 'on'
 
 lib_dir = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift lib_dir unless $LOAD_PATH.include?(lib_dir)
