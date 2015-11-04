@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = 'telemetry-errors'
+  s.name = 'telemetry'
   s.version = '0.1.0'
-  s.summary = 'Error recording service'
+  s.summary = 'Telemetry recording and broadcast service'
   s.authors = ['']
   s.require_paths = ['lib']
   s.files = Dir.glob('{lib}/**/*')
