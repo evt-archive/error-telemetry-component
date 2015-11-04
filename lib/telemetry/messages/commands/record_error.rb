@@ -1,7 +1,7 @@
 module Telemetry
   module Errors
     module Messages
-      class RecordErrors
+      class RecordError
         include EventStore::Messaging::Message
       end
     end
