@@ -1,8 +1,8 @@
 module Telemetry
   module Errors
     module Messages
-      module Commands
-        class RecordError
+      module Events
+        class RecordedError
           include EventStore::Messaging::Message
         end
       end
