@@ -3,6 +3,7 @@ Gem::Specification.new do |s|
   s.name = 'telemetry'
   s.version = '0.0.0'
   s.summary = 'Telemetry recording and broadcast service'
+  s.description = ' '
 
   s.authors = ['Obsidian Software, Inc']
   s.email = 'developers@obsidianexchange.com'
