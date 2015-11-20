@@ -4,6 +4,8 @@ module Telemetry
       module Commands
         class RecordError
           include EventStore::Messaging::Message
+
+          attribute :error_data
         end
       end
     end
