@@ -1,3 +1,5 @@
+require 'socket'
+
 require 'eventide'
 require 'raygun_client'
 
@@ -8,3 +10,4 @@ require 'telemetry/store'
 require 'telemetry/projection'
 require 'telemetry/handler'
 require 'telemetry/dispatcher'
+require 'telemetry/record_error'

@@ -1,15 +1,36 @@
 module Telemetry
-  module Errors
-    class Handler
-      include EventStore::Messaging::Handler
-      include Messages::Commands
-      include Messages::Events
+  class Handler
+    include EventStore::Messaging::Handler
+    include Messages::Commands
+    include Messages::Events
 
-      handle RecordError do |command|
-      end
+    dependency :clock, Clock::UTC
+    dependency :writer, EventStore::Messaging::Writer
 
-      handle ErrorRecorded do |command|
-      end
+    def configure_dependencies
+      Clock::UTC.configure self
+      EventStore::Messaging::Writer.configure self
     end
+
+    handle RecordError do |command|
+      event = ErrorRecorded.proceed command, copy: [
+        :error,
+        :machine_name
+      ]
+
+      event.recorded_time = command.time
+      event.time = clock.now
+
+
+
+
+    end
+
+    handle ErrorRecorded do |event|
+    end
+
+    # handle PublishError do |event|
+
+    # end
   end
 end

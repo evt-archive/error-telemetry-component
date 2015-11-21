@@ -1,8 +1,6 @@
 module Telemetry
-  module Errors
-    class Entity
-      include Schema
+  class Entity
+    include Schema
 
-    end
   end
 end

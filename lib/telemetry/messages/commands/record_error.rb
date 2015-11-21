@@ -1,12 +1,12 @@
 module Telemetry
-  module Errors
-    module Messages
-      module Commands
-        class RecordError
-          include EventStore::Messaging::Message
+  module Messages
+    module Commands
+      class RecordError
+        include EventStore::Messaging::Message
 
-          attribute :error_data
-        end
+        attribute :error
+        attribute :machine_name
+        attribute :time
       end
     end
   end

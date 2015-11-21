@@ -1,6 +1,4 @@
 module Telemetry
-  module Errors
-    class Store
-    end
+  class Store
   end
 end
