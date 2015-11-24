@@ -4,8 +4,9 @@ module Telemetry
       class ErrorRecorded
         include EventStore::Messaging::Message
 
+        attribute :error_id
         attribute :error
-        attribute :machine_name
+        attribute :hostname
         attribute :time
       end
     end

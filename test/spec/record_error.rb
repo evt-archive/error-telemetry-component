@@ -2,14 +2,23 @@ require_relative 'spec_init'
 
 describe "Recording an Error" do
   specify "Writes the recorded event" do
-    error = Telemetry::Controls::Error.example
+    # substitutes = [:writer, :host_info]
+    substitutes = [:host_info]
 
-    SubstAttr::Substitute.(:writer, record_error)
+    record_error = Telemetry::Controls::RecordError.example(substitute: substitutes)
 
-    record_error.()
+    event = record_error.()
 
-    __logger.focus record_error.inspect
+    if substitutes.include? :writer
+      writer = record_error.writer
 
-    #assert something about the writer
+      written = writer.written? do |msg|
+        msg.class == Telemetry::Messages::Events::ErrorRecorded
+      end
+
+      assert(written)
+    end
+
+    assert(event.class == Telemetry::Messages::Events::ErrorRecorded)
   end
 end

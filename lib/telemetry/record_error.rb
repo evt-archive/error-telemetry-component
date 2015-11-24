@@ -1,29 +1,29 @@
 module Telemetry
   class RecordError
-    attr_reader :error_data
-    attr_reader :hostname
+    include EventStore::Messaging::StreamName
+    include Messages::Events
+
+    initializer :error_data
 
     dependency :logger, Telemetry::Logger
     dependency :clock, Clock::UTC
+    dependency :identifier, Identifier::UUID::Random
+    dependency :host_info, HostInfo
     dependency :writer, EventStore::Messaging::Writer
 
-    def initialize(error_data, hostname)
-      @error_data = error_data
-      @hostname = hostname
-    end
+    category 'error'
 
     def self.build(error)
-      error_data = ErrorData::Import.(error)
-      hostname = Socket.gethostname
+      error_data = import_error(error)
 
-      new(error_data, hostname).tap do |instance|
+      new(error_data).tap do |instance|
         Telemetry::Logger.configure instance
         Clock::UTC.configure instance
+        Identifier::UUID::Random.configure instance
+        Telemetry::HostInfo.configure instance
         EventStore::Messaging::Writer.configure instance
       end
     end
-
-
 
     def self.call(error)
       instance = build(error)
@@ -31,11 +31,27 @@ module Telemetry
       instance.(time)
     end
 
-    def call(time=nil)
+    def call(time: nil, hostname: nil)
       time ||= clock.now
-      # serialize the err data
-      # add ID to event
-      # send event to the writer
+      hostname ||= host_info.hostname
+
+      event = ErrorRecorded.new
+      event.error_id = identifier.get
+      event.error = error_data
+      event.hostname = hostname
+      event.time = time
+
+      #!!! serialize the err data
+
+      event_stream_name = stream_name event.error_id
+
+      writer.write event, event_stream_name
+
+      event
+    end
+
+    def self.import_error(error)
+      ErrorData::Import.(error)
     end
   end
 end
