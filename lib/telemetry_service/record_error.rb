@@ -37,11 +37,13 @@ module TelemetryService
 
       event = ErrorRecorded.new
       event.error_id = identifier.get
-      event.error = error_data
       event.hostname = hostname
       event.time = time
 
       #!!! serialize the err data
+      event.error = error_data.to_h
+
+
 
       event_stream_name = stream_name event.error_id
 
