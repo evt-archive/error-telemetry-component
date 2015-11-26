@@ -1,4 +1,4 @@
-module Telemetry
+module TelemetryService
   class RecordError
     include EventStore::Messaging::StreamName
     include Messages::Events
@@ -20,7 +20,7 @@ module Telemetry
         Telemetry::Logger.configure instance
         Clock::UTC.configure instance
         Identifier::UUID::Random.configure instance
-        Telemetry::HostInfo.configure instance
+        TelemetryService::HostInfo.configure instance
         EventStore::Messaging::Writer.configure instance
       end
     end

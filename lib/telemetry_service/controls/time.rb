@@ -1,4 +1,4 @@
-module Telemetry
+module TelemetryService
   module Controls
     Time = ::Controls::Time
   end

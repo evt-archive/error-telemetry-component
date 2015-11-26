@@ -1,4 +1,4 @@
-module Telemetry
+module TelemetryService
   class Handler
     include EventStore::Messaging::Handler
     include Messages::Commands

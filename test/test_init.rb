@@ -8,6 +8,6 @@ puts RUBY_DESCRIPTION
 require_relative '../init.rb'
 
 require 'runner'
-require 'telemetry/controls'
+require 'telemetry_service/controls'
 
 Telemetry::Logger::AdHoc.activate

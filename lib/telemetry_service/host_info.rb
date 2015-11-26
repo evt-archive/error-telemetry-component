@@ -1,4 +1,4 @@
-module Telemetry
+module TelemetryService
   class HostInfo
     def hostname
       self.class.hostname

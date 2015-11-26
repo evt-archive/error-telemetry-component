@@ -1,4 +1,4 @@
-module Telemetry
+module TelemetryService
   class Entity
     include Schema
 

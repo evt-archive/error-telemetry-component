@@ -1,4 +1,4 @@
-module Telemetry
+module TelemetryService
   class Store
   end
 end
