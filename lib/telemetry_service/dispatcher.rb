@@ -2,6 +2,6 @@ module TelemetryService
   class Dispatcher
     include EventStore::Messaging::Dispatcher
 
-    handler Handler
+    handler Error::Handler
   end
 end

@@ -13,12 +13,12 @@ describe "Recording an Error" do
       writer = record_error.writer
 
       written = writer.written? do |msg|
-        msg.class == TelemetryService::Messages::Events::ErrorRecorded
+        msg.class == TelemetryService::Error::Messages::Events::Recorded
       end
 
       assert(written)
     end
 
-    assert(event.class == TelemetryService::Messages::Events::ErrorRecorded)
+    assert(event.class == TelemetryService::Error::Messages::Events::Recorded)
   end
 end
