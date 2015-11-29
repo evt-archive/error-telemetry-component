@@ -41,16 +41,13 @@ module TelemetryService
         event.hostname = hostname
         event.time = time
 
-        #!!! serialize the err data
-        event.error = error_data.to_h
+        event.error = ::Serialize::Write.raw_data(error_data, :json)
 
-
-
-        event_stream_name = stream_name event.error_id
+        event_stream_name = stream_name(event.error_id)
 
         writer.write event, event_stream_name
 
-        event
+        return event, event_stream_name
       end
 
       def self.import_error(error)

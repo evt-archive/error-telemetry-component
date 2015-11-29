@@ -14,6 +14,10 @@ module TelemetryService
           if name == :host_info
             record_error.host_info.hostname = 'some hostname'
           end
+
+          if name == :clock
+            record_error.clock.now = Controls::Time.example
+          end
         end
 
         record_error
