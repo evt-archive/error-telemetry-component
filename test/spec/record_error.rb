@@ -7,18 +7,11 @@ describe "Recording an Error" do
 
     record_error = TelemetryService::Controls::RecordError.example(substitute: substitutes)
 
+    writer = record_error.writer
+    sink = EventStore::Messaging::Writer.register_telemetry_sink(writer)
+
     event = record_error.()
 
-    if substitutes.include? :writer
-      writer = record_error.writer
-
-      written = writer.written? do |msg|
-        msg.class == TelemetryService::Error::Messages::Events::Recorded
-      end
-
-      assert(written)
-    end
-
-    assert(event.class == TelemetryService::Error::Messages::Events::Recorded)
+    assert(sink.recorded_written? { |r| r.data.message.class == TelemetryService::Error::Messages::Events::Recorded })
   end
 end
