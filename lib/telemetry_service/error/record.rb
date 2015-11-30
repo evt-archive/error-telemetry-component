@@ -32,14 +32,11 @@ module TelemetryService
         instance.(time)
       end
 
-      def call(time: nil, hostname: nil)
-        time ||= clock.now
-        hostname ||= host_info.hostname
-
+      def call
         event = Recorded.new
         event.error_id = identifier.get
-        event.hostname = hostname
-        event.time = time
+        event.hostname = host_info.hostname
+        event.time = clock.now
 
         event.error = ::Serialize::Write.raw_data(error_data, :json)
 

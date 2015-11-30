@@ -1,4 +1,4 @@
-require_relative 'spec_init'
+require_relative '../spec_init'
 
 describe "Recording an Error" do
   substitutes = [:host_info, :clock]
