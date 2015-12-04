@@ -19,7 +19,7 @@ describe "Recording an Error" do
     specify "Error" do
       recorded_error = record_error.error_data
       recorded_error = ::Serialize::Write.raw_data(recorded_error, :json)
-      recorded_error =Casing::Underscore.(recorded_error)
+      recorded_error = Casing::Underscore.(recorded_error)
 
       read_error = read_data.data['error']
 
