@@ -9,6 +9,12 @@ module TelemetryService
           attribute :error
           attribute :hostname
           attribute :time
+
+          def self.build(data)
+            new.tap do |instance|
+              SetAttributes.(instance, data, exclude: :error)
+            end
+          end
         end
       end
     end

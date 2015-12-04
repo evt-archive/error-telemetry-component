@@ -2,12 +2,12 @@ module TelemetryService
   module Controls
     module PublishError
       def self.example(error_id=nil, substitute: nil)
-        error_id ||= ::Controls::ID.get
+        error_id ||= Controls::ID.example
         substitutes = Array(substitute)
 
-        error_data = TelemetryService::Controls::ErrorData.example
+        recorded_event = TelemetryService::Controls::Messages::Recorded.example
 
-        publish_error = TelemetryService::Error::Publish.build(error_id, error_data)
+        publish_error = TelemetryService::Error::Publish.build(recorded_event)
 
         substitutes.each do |name|
           SubstAttr::Substitute.(name, publish_error)

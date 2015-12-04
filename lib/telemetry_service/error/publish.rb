@@ -19,12 +19,14 @@ module TelemetryService
       dependency :raygun_post, RaygunClient::HTTP::Post
       dependency :writer, EventStore::Messaging::Writer
 
-      initializer :error_id, :error_data
+      initializer :data
 
       category 'error'
 
-      def self.build(error_id, error_data)
-        new(error_id, error_data).tap do |instance|
+      def self.build(recorded_event)
+        data = ConvertErrorData.(recorded_event)
+
+        new(data).tap do |instance|
           Telemetry::Logger.configure instance
           Clock::UTC.configure instance
           RaygunClient::HTTP::Post.configure instance
@@ -32,13 +34,13 @@ module TelemetryService
         end
       end
 
-      def self.call(error_id, error_data)
+      def self.call(recorded_event)
         instance = build(error)
         instance.()
       end
 
       def call
-        response = raygun_post.(error_data)
+        response = raygun_post.(data)
       end
     end
   end
