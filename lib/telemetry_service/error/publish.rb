@@ -29,7 +29,7 @@ module TelemetryService
         new(data).tap do |instance|
           Telemetry::Logger.configure instance
           Clock::UTC.configure instance
-          RaygunClient::HTTP::Post.configure instance
+          RaygunClient::HTTP::Post.configure instance, :raygun_post
           EventStore::Messaging::Writer.configure instance
         end
       end

@@ -4,12 +4,13 @@ describe "Publish an Error to Raygun" do
   substitute = :clock
   publish_error = TelemetryService::Controls::PublishError.example(substitute: substitute)
 
-  # event, stream_name = record_error.()
+  raygun_post = publish_error.raygun_post
+  sink = RaygunClient::HTTP::Post.register_telemetry_sink(raygun_post)
 
-  publish_error.()
+  event, stream_name = publish_error.()
 
   specify "Sends the error to Raygun" do
-    skip()
+    assert(sink.recorded_posted?)
   end
 
   # path = "/streams/#{stream_name}"

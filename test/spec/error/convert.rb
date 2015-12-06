@@ -7,7 +7,7 @@ describe "Convert Recorded Event to Raygun Data" do
 
   raygun_data = TelemetryService::Error::ConvertErrorData.(recorded_event)
 
-  specify do
+  specify "Event is converted to Raygun data" do
     assert(raygun_data == compare_raygun_data)
   end
 end

@@ -14,6 +14,17 @@ module TelemetryService
 
           message
         end
+
+        def self.data
+          data = {}
+
+          data[:error_id] = Controls::ID.example
+          data[:hostname] = Controls::Host.name
+          data[:time] = Controls::Time.example
+          data[:error] = Controls::ErrorData.example.to_h
+
+          data
+        end
       end
     end
   end
