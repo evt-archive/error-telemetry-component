@@ -1,13 +1,3 @@
-# command = Publish.proceed(event, copy: [
-#   :error_id,
-#   :error,
-#   :hostname,
-#   :time
-# ])
-
-# stream_name = command_stream_name(command.error_id)
-# writer.write command, stream_name
-
 module TelemetryService
   module Error
     class Publish
@@ -19,14 +9,12 @@ module TelemetryService
       dependency :raygun_post, RaygunClient::HTTP::Post
       dependency :writer, EventStore::Messaging::Writer
 
-      initializer :data
+      initializer :recorded_event
 
       category 'error'
 
       def self.build(recorded_event)
-        data = ConvertErrorData.(recorded_event)
-
-        new(data).tap do |instance|
+        new(recorded_event).tap do |instance|
           Telemetry::Logger.configure instance
           Clock::UTC.configure instance
           RaygunClient::HTTP::Post.configure instance, :raygun_post
@@ -35,12 +23,26 @@ module TelemetryService
       end
 
       def self.call(recorded_event)
-        instance = build(error)
+        instance = build(recorded_event)
         instance.()
       end
 
       def call
+        data = ConvertErrorData.(recorded_event)
+
         response = raygun_post.(data)
+
+        event = Published.proceed(recorded_event, copy: [
+          :error_id
+        ])
+
+        event.time = clock.now
+
+        event_stream_name = stream_name(event.error_id)
+
+        writer.write event, event_stream_name
+
+        return event, event_stream_name
       end
     end
   end

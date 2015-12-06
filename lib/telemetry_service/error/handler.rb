@@ -4,7 +4,6 @@ module TelemetryService
       include EventStore::Messaging::Handler
       include EventStore::Messaging::StreamName
       include Messages::Events
-      include Messages::Commands
 
       dependency :clock, Clock::UTC
       dependency :writer, EventStore::Messaging::Writer

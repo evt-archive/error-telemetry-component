@@ -1,2 +1,14 @@
-# published_time will be used as idempotence check
-# for not publishing again
+module TelemetryService
+  module Error
+    module Messages
+      module Events
+        class Published
+          include EventStore::Messaging::Message
+
+          attribute :error_id
+          attribute :time
+        end
+      end
+    end
+  end
+end

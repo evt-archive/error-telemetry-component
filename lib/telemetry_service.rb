@@ -7,7 +7,7 @@ require 'initializer'; Initializer.activate
 
 require 'telemetry_service/host_info'
 require 'telemetry_service/error/messages/events/recorded'
-require 'telemetry_service/error/messages/commands/publish'
+require 'telemetry_service/error/messages/events/published'
 require 'telemetry_service/error/entity'
 require 'telemetry_service/error/store'
 require 'telemetry_service/error/projection'
