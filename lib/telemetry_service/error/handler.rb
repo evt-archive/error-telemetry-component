@@ -2,10 +2,13 @@ module TelemetryService
   module Error
     class Handler
       include EventStore::Messaging::Handler
+      include EventStore::Messaging::StreamName
       include Messages::Events
 
       dependency :clock, Clock::UTC
       dependency :writer, EventStore::Messaging::Writer
+
+      category 'error'
 
       def configure_dependencies
         Clock::UTC.configure self
@@ -13,6 +16,7 @@ module TelemetryService
       end
 
       handle Recorded do |event|
+        # actuate publish
       end
 
       # handle Publish do |command|

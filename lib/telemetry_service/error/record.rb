@@ -4,13 +4,13 @@ module TelemetryService
       include EventStore::Messaging::StreamName
       include Messages::Events
 
-      initializer :error_data
-
       dependency :logger, Telemetry::Logger
       dependency :clock, Clock::UTC
       dependency :identifier, Identifier::UUID::Random
       dependency :host_info, HostInfo
       dependency :writer, EventStore::Messaging::Writer
+
+      initializer :error_data
 
       category 'error'
 
@@ -28,18 +28,14 @@ module TelemetryService
 
       def self.call(error)
         instance = build(error)
-        time = instance.clock.now
-        instance.(time)
+        instance.()
       end
 
-      def call(time: nil, hostname: nil)
-        time ||= clock.now
-        hostname ||= host_info.hostname
-
+      def call
         event = Recorded.new
         event.error_id = identifier.get
-        event.hostname = hostname
-        event.time = time
+        event.hostname = host_info.hostname
+        event.time = clock.now
 
         event.error = ::Serialize::Write.raw_data(error_data, :json)
 

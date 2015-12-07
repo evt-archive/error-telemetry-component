@@ -1,17 +1,14 @@
-require_relative 'spec_init'
+require_relative '../spec_init'
 
 describe "Recording an Error" do
   substitutes = [:host_info, :clock]
-
   record_error = TelemetryService::Controls::RecordError.example(substitute: substitutes)
 
   event, stream_name = record_error.()
 
   path = "/streams/#{stream_name}"
-
   get = EventStore::Client::HTTP::Request::Get.build
   body_text, get_response = get.("#{path}/0")
-
   read_data = EventStore::Client::HTTP::EventData::Read.parse body_text
 
   context "Writes the recorded event" do
@@ -22,7 +19,7 @@ describe "Recording an Error" do
     specify "Error" do
       recorded_error = record_error.error_data
       recorded_error = ::Serialize::Write.raw_data(recorded_error, :json)
-      recorded_error =Casing::Underscore.(recorded_error)
+      recorded_error = Casing::Underscore.(recorded_error)
 
       read_error = read_data.data['error']
 
