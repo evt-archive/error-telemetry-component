@@ -28,9 +28,21 @@ module TelemetryService
       end
 
       def call
+        logger.trace "Publishing error"
+
         data = ConvertErrorData.(recorded_event)
 
         response = raygun_post.(data)
+
+        event, event_stream_name = record_published_event(recorded_event)
+
+        logger.debug "Published error (#{LogText::RaygunData.(data)})"
+
+        return event, event_stream_name
+      end
+
+      def record_published_event(recorded_event)
+        logger.trace "Recording published event (Error ID: #{recorded_event.error_id})"
 
         event = Published.proceed(recorded_event, copy: [
           :error_id
@@ -42,7 +54,17 @@ module TelemetryService
 
         writer.write event, event_stream_name
 
+        logger.debug "Recorded published event (Error ID: #{recorded_event.error_id})"
+
         return event, event_stream_name
+      end
+
+      module LogText
+        module RaygunData
+          def self.call(data)
+            "Error ID: #{data.custom_data[:error_id]}, Error Message: #{data.error.message}, Occurred: #{data.occurred_time}, Hostname: #{data.machine_name})"
+          end
+        end
       end
     end
   end
