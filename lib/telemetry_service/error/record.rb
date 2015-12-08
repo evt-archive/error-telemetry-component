@@ -32,6 +32,8 @@ module TelemetryService
       end
 
       def call
+        logger.trace "Recoding error"
+
         event = Recorded.new
         event.error_id = identifier.get
         event.hostname = host_info.hostname
@@ -43,11 +45,21 @@ module TelemetryService
 
         writer.write event, event_stream_name
 
+        logger.debug "Recoded error (#{LogText::RecordEvent.(event)})"
+
         return event, event_stream_name
       end
 
       def self.import_error(error)
         ErrorData::Import.(error)
+      end
+
+      module LogText
+        module RecordEvent
+          def self.call(record_event)
+            "Error ID: #{record_event.error_id}, Error Message: #{record_event.error[:message]}, Time: #{record_event.time}, Hostname: #{record_event.hostname})"
+          end
+        end
       end
     end
   end
