@@ -14,7 +14,8 @@ module TelemetryService
             new.tap do |instance|
               SetAttributes.(instance, data, exclude: :error)
 
-              error_data = ErrorData.build data[:error]
+              error_data = ErrorData.build data['error']
+
               instance.error = error_data
             end
           end

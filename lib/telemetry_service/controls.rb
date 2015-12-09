@@ -1,8 +1,10 @@
 require 'controls'
 require 'raygun_client/controls'
+require 'event_store/messaging/controls'
 
 require 'telemetry_service/controls/time'
 require 'telemetry_service/controls/id'
+require 'telemetry_service/controls/stream_name'
 require 'telemetry_service/controls/host'
 require 'telemetry_service/controls/error'
 require 'telemetry_service/controls/error_data'
