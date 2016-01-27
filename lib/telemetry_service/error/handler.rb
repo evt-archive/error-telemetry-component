@@ -8,7 +8,7 @@ module TelemetryService
       dependency :clock, Clock::UTC
       dependency :writer, EventStore::Messaging::Writer
 
-      category 'error'
+      category :error
 
       def configure_dependencies
         Clock::UTC.configure self

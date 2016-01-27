@@ -12,7 +12,7 @@ module TelemetryService
 
       initializer :error_data
 
-      category 'error'
+      category :error
 
       def self.build(error)
         error_data = import_error(error)

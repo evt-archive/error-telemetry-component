@@ -11,7 +11,7 @@ module TelemetryService
 
       initializer :recorded_event
 
-      category 'error'
+      category :error
 
       def self.build(recorded_event)
         new(recorded_event).tap do |instance|
