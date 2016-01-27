@@ -1,3 +1,3 @@
 require_relative './test/test_init'
 
-Runner.('test/spec.rb')
+TestBench::Runner.('test/spec.rb') or exit 1
