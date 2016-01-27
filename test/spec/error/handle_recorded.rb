@@ -8,10 +8,10 @@ context "Handle Error Published Event" do
   handler.handle_recorded(event)
 
   test "Publishes the error to raygun" do
-    __logger.focus "Not implemented"
+    raise "Not implemented"
   end
 
   test "Writes the published event" do
-    __logger.focus "Not implemented"
+    raise "Not implemented"
   end
 end
