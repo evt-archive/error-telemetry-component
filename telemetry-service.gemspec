@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'telemetry_service'
-  s.version = '0.0.0'
+  s.version = '0.0.0.0'
   s.summary = 'Telemetry recording and broadcast service, including error reporting and integration with third-party reporting services'
   s.description = ' '
 
