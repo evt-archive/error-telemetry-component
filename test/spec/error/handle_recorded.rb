@@ -1,17 +1,17 @@
 require_relative '../spec_init'
 
-describe "Handle Error Published Event" do
+context "Handle Error Published Event" do
   handler = TelemetryService::Error::Handler.build
 
   event = TelemetryService::Controls::Messages::Recorded.example
 
   handler.handle_recorded(event)
 
-  specify "Publishes the error to raygun" do
-    skip()
+  test "Publishes the error to raygun" do
+    __logger.focus "Not implemented"
   end
 
-  specify "Writes the published event" do
-    skip()
+  test "Writes the published event" do
+    __logger.focus "Not implemented"
   end
 end
