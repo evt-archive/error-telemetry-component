@@ -1,6 +1,6 @@
 require_relative '../spec_init'
 
-describe "Publish an Error to Raygun" do
+context "Publish an Error to Raygun" do
   substitute = :clock
   publish_error = TelemetryService::Controls::PublishError.example(substitute: substitute)
 
@@ -9,11 +9,11 @@ describe "Publish an Error to Raygun" do
 
   event, stream_name = publish_error.()
 
-  specify "Sends the error to Raygun" do
+  test "Sends the error to Raygun" do
     assert(sink.recorded_posted?)
   end
 
-  specify "Writes published message" do
+  test "Writes published message" do
     path = "/streams/#{stream_name}"
     get = EventStore::Client::HTTP::Request::Get.build
     body_text, get_response = get.("#{path}/0")

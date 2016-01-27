@@ -1,8 +1,8 @@
 require_relative '../spec_init'
 
-describe "Recording an Error" do
-  substitutes = [:host_info, :clock]
-  record_error = TelemetryService::Controls::RecordError.example(substitute: substitutes)
+context "Recording an Error" do
+  substitute = [:host_info, :clock]
+  record_error = TelemetryService::Controls::RecordError.example(substitute: substitute)
 
   event, stream_name = record_error.()
 
@@ -12,28 +12,28 @@ describe "Recording an Error" do
   read_data = EventStore::Client::HTTP::EventData::Read.parse body_text
 
   context "Writes the recorded event" do
-    specify "Event type" do
+    test "Event type" do
       assert(read_data.type == event.message_type)
     end
 
-    specify "Error" do
+    test "Error" do
+      read_error = read_data.data['error']
+
       recorded_error = record_error.error_data
       recorded_error = ::Serialize::Write.raw_data(recorded_error, :json)
-      recorded_error = Casing::Underscore.(recorded_error)
-
-      read_error = read_data.data['error']
+      recorded_error = Casing::Underscore.(recorded_error, symbol_to_string: true)
 
       assert(read_error == recorded_error)
     end
 
-    specify "Hostname" do
+    test "Hostname" do
       recorded_hostname = record_error.host_info.hostname
       read_hostname = read_data.data['hostname']
 
       assert(read_hostname == recorded_hostname)
     end
 
-    specify "Time" do
+    test "Time" do
       recorded_time = record_error.clock.now
       read_time = read_data.data['time']
 

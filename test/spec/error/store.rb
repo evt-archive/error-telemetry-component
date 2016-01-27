@@ -1,6 +1,6 @@
 require_relative '../spec_init'
 
-describe "Store" do
+context "Store" do
   writer = EventStore::Messaging::Writer.build
 
   stream_name = TelemetryService::Controls::StreamName.get 'error'
@@ -21,10 +21,10 @@ describe "Store" do
     published = TelemetryService::Controls::Messages::Published.example
     writer.write published, stream_name
 
-    entity = store.get id
+    enttesty = store.get id
 
-    specify "id" do
-      assert(entity.attributes.values.any? { |v| !v.nil? })
+    test "id" do
+      assert(enttesty.attributes.values.any? { |v| !v.nil? })
     end
   end
 end
