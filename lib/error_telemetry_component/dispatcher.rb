@@ -1,4 +1,4 @@
-module TelemetryService
+module ErrorTelemetryComponent
   class Dispatcher
     include EventStore::Messaging::Dispatcher
 

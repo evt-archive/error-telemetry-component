@@ -1,12 +1,12 @@
-module TelemetryService
+module ErrorTelemetryComponent
   module Controls
     module RecordError
       def self.example(substitute: nil)
         substitutes = Array(substitute)
 
-        error = TelemetryService::Controls::Error.example
+        error = ErrorTelemetryComponent::Controls::Error.example
 
-        record_error = TelemetryService::Error::Record.build(error)
+        record_error = ErrorTelemetryComponent::Error::Record.build(error)
 
         substitutes.each do |name|
           SubstAttr::Substitute.(name, record_error)

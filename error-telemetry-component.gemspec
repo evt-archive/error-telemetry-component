@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = 'telemetry_service'
+  s.name = 'error_telemetry_component'
   s.version = '0.0.0.0'
-  s.summary = 'Telemetry recording and broadcast service, including error reporting and integration with third-party reporting services'
+  s.summary = 'Error telemetry recording and publishing component'
   s.description = ' '
 
   s.authors = ['Obsidian Software, Inc']
@@ -20,5 +20,4 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'raygun_client'
 
   s.add_development_dependency 'test_bench'
-  s.add_development_dependency 'pry'
 end

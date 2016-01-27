@@ -1,4 +1,4 @@
-module TelemetryService
+module ErrorTelemetryComponent
   module Controls
     RaygunData = RaygunClient::Controls::Data
   end

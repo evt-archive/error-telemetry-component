@@ -1,4 +1,4 @@
-module TelemetryService
+module ErrorTelemetryComponent
   module Error
     class Projection
       include EventStore::EntityProjection

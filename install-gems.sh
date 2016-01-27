@@ -35,14 +35,12 @@ fi
 
 public_source="--source $public_gem_repo_uri"
 
-ruby_gems_source="--source https://rubygems.org"
-
 echo
 echo "Installing gems locally (POSTURE: $POSTURE)"
 echo '- - -'
 for gem in *.gem; do
   echo "($gem)"
-  cmd="gem install $gem --clear-sources $private_source $public_source $ruby_gems_source --install-dir ./gems"
+  cmd="gem install $gem $private_source $public_source --install-dir ./gems"
 
   if [ operational != "$POSTURE" ]; then
     cmd="$cmd --development"

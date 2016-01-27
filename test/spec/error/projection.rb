@@ -2,10 +2,10 @@ require_relative '../spec_init'
 
 context "Error Projection" do
   context "Recorded" do
-    entity = TelemetryService::Error::Entity.new
-    projection = TelemetryService::Error::Projection.new entity
+    entity = ErrorTelemetryComponent::Error::Entity.new
+    projection = ErrorTelemetryComponent::Error::Projection.new entity
 
-    recorded = TelemetryService::Controls::Messages::Recorded.example
+    recorded = ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
     projection.apply recorded
 
@@ -29,10 +29,10 @@ context "Error Projection" do
   end
 
   context "Published" do
-    entity = TelemetryService::Error::Entity.new
-    projection = TelemetryService::Error::Projection.new entity
+    entity = ErrorTelemetryComponent::Error::Entity.new
+    projection = ErrorTelemetryComponent::Error::Projection.new entity
 
-    published = TelemetryService::Controls::Messages::Published.example
+    published = ErrorTelemetryComponent::Controls::Messages::Published.example
 
     projection.apply published
 

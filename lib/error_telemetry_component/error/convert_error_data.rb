@@ -1,4 +1,4 @@
-module TelemetryService
+module ErrorTelemetryComponent
   module Error
     class ConvertErrorData
       def self.call(recorded_event)

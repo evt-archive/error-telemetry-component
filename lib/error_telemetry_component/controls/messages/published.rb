@@ -1,11 +1,11 @@
-module TelemetryService
+module ErrorTelemetryComponent
   module Controls
     module Messages
       module Published
         def self.example(error_id=nil)
           error_id ||= Controls::ID.example
 
-          message = TelemetryService::Error::Messages::Events::Published.new
+          message = ErrorTelemetryComponent::Error::Messages::Events::Published.new
 
           message.error_id = error_id
           message.time = Controls::Time.example

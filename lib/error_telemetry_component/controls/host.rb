@@ -1,4 +1,4 @@
-module TelemetryService
+module ErrorTelemetryComponent
   module Controls
     module Host
       def self.name

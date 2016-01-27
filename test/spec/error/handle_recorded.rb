@@ -1,9 +1,9 @@
 require_relative '../spec_init'
 
 context "Handle Error Published Event" do
-  handler = TelemetryService::Error::Handler.build
+  handler = ErrorTelemetryComponent::Error::Handler.build
 
-  event = TelemetryService::Controls::Messages::Recorded.example
+  event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
   handler.handle_recorded(event)
 

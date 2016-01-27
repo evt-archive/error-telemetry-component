@@ -1,4 +1,4 @@
-module TelemetryService
+module ErrorTelemetryComponent
   class HostInfo
     def hostname
       self.class.hostname

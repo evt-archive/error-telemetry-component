@@ -2,7 +2,7 @@ require_relative '../spec_init'
 
 context "Publish an Error to Raygun" do
   substitute = :clock
-  publish_error = TelemetryService::Controls::PublishError.example(substitute: substitute)
+  publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
 
   raygun_post = publish_error.raygun_post
   sink = RaygunClient::HTTP::Post.register_telemetry_sink(raygun_post)

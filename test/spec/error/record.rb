@@ -2,7 +2,7 @@ require_relative '../spec_init'
 
 context "Recording an Error" do
   substitute = [:host_info, :clock]
-  record_error = TelemetryService::Controls::RecordError.example(substitute: substitute)
+  record_error = ErrorTelemetryComponent::Controls::RecordError.example(substitute: substitute)
 
   event, stream_name = record_error.()
 
