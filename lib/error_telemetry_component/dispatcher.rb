@@ -2,6 +2,6 @@ module ErrorTelemetryComponent
   class Dispatcher
     include EventStore::Messaging::Dispatcher
 
-    handler Handler
+    handler Handlers::Recorded
   end
 end
