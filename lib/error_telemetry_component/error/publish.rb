@@ -4,7 +4,8 @@ module ErrorTelemetryComponent
       include EventStore::Messaging::StreamName
       include Messages::Events
 
-      dependency :logger, Telemetry::Logger
+      dependency :telemetry, ::Telemetry
+      dependency :logger, ::Telemetry::Logger
       dependency :clock, Clock::UTC
       dependency :raygun_post, RaygunClient::HTTP::Post
       dependency :writer, EventStore::Messaging::Writer
@@ -15,7 +16,8 @@ module ErrorTelemetryComponent
 
       def self.build(recorded_event)
         new(recorded_event).tap do |instance|
-          Telemetry::Logger.configure instance
+          ::Telemetry.configure instance
+          ::Telemetry::Logger.configure instance
           Clock::UTC.configure instance
           RaygunClient::HTTP::Post.configure instance, :raygun_post
           EventStore::Messaging::Writer.configure instance
@@ -33,6 +35,7 @@ module ErrorTelemetryComponent
         data = ConvertErrorData.(recorded_event)
 
         response = raygun_post.(data)
+        telemetry.record :published, response
 
         event, event_stream_name = record_published_event(recorded_event)
 
@@ -53,10 +56,32 @@ module ErrorTelemetryComponent
         event_stream_name = stream_name(event.error_id)
 
         writer.write event, event_stream_name
+        telemetry.record :wrote_event, Telemetry::EventData.new(event, event_stream_name)
 
         logger.debug "Recorded published event (Error ID: #{recorded_event.error_id})"
 
         return event, event_stream_name
+      end
+
+      def self.register_telemetry_sink(publish)
+        sink = Telemetry.sink
+        publish.telemetry.register sink
+        sink
+      end
+
+      module Telemetry
+        class Sink
+          include ::Telemetry::Sink
+
+          record :published
+          record :wrote_event
+        end
+
+        EventData = Struct.new :event, :stream_name
+
+        def self.sink
+          Sink.new
+        end
       end
 
       module LogText

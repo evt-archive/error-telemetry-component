@@ -5,13 +5,13 @@ context "Handle Error Published Event" do
 
   event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
-  handler.handle_recorded(event)
+  publish = handler.handle_recorded(event)
 
-  test "Publishes the error to raygun" do
-    raise "Not implemented"
-  end
+  test "Publishes the error" #do
+  #   publish.recorded_published?
+  # end
 
-  test "Writes the published event" do
-    raise "Not implemented"
-  end
+  test "Writes the published event" #do
+  #   publish.recorded_wrote_event?
+  # end
 end

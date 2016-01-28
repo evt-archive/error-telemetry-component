@@ -16,13 +16,12 @@ module ErrorTelemetryComponent
       end
 
       handle Recorded do |event|
-        # actuate publish
+        # publish = ErrorTelemetryComponent::Error::Publish.build(event)
+        # event, event_stream_name = publish.()
+        # return publish
       end
 
       # handle Publish do |command|
-      # end
-
-      # handle Published do |event|
       # end
     end
   end
