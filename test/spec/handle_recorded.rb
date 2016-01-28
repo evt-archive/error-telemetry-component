@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative './spec_init'
 
 context "Handle Published Event" do
   handler = ErrorTelemetryComponent::Handlers::Recorded.build

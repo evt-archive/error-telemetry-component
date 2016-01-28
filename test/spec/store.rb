@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative './spec_init'
 
 context "Store" do
   writer = EventStore::Messaging::Writer.build

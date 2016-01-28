@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative './spec_init'
 
 context "Error Projection" do
   context "Recorded" do
