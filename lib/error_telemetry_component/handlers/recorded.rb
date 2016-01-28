@@ -14,13 +14,11 @@ module ErrorTelemetryComponent
       def configure_dependencies
         Clock::UTC.configure self
         EventStore::Messaging::Writer.configure self
-        # ErrorTelemetryComponent::Publish.configure self
+        ErrorTelemetryComponent::Publish.configure self
       end
 
       handle Recorded do |event|
-        publish = ErrorTelemetryComponent::Publish.build(event)
-        event, event_stream_name = publish.()
-        return publish
+        publish.(event)
       end
     end
   end

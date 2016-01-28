@@ -4,9 +4,8 @@ module ErrorTelemetryComponent
       def self.example(error_id=nil, substitute: nil, recorded_event: nil)
         error_id ||= Controls::ID.example
         substitutes = Array(substitute)
-        recorded_event ||= ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
-        publish_error = ErrorTelemetryComponent::Publish.build(recorded_event)
+        publish_error = ErrorTelemetryComponent::Publish.build
 
         substitutes.each do |name|
           SubstAttr::Substitute.(name, publish_error)

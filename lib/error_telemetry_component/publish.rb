@@ -9,12 +9,10 @@ module ErrorTelemetryComponent
     dependency :raygun_post, RaygunClient::HTTP::Post
     dependency :writer, EventStore::Messaging::Writer
 
-    initializer :recorded_event
-
     category :error
 
-    def self.build(recorded_event)
-      new(recorded_event).tap do |instance|
+    def self.build
+      new.tap do |instance|
         ::Telemetry.configure instance
         ::Telemetry::Logger.configure instance
         Clock::UTC.configure instance
@@ -23,18 +21,23 @@ module ErrorTelemetryComponent
       end
     end
 
-    def self.call(recorded_event)
-      instance = build(recorded_event)
-      instance.()
+    def self.configure(receiver)
+      instance = build
+      receiver.publish = instance
     end
 
-    def call
+    def self.call(recorded_event)
+      instance = build
+      instance.(recorded_event)
+    end
+
+    def call(recorded_event)
       logger.trace "Publishing error"
 
       data = ConvertErrorData.(recorded_event)
 
       response = raygun_post.(data)
-      telemetry.record :published, response
+      telemetry.record :published, Telemetry::EventData.new(response)
 
       event, event_stream_name = record_published_event(recorded_event)
 
@@ -76,6 +79,7 @@ module ErrorTelemetryComponent
         record :wrote_event
       end
 
+      RaygunResponseData = Struct.new :response
       EventData = Struct.new :event, :stream_name
 
       def self.sink
