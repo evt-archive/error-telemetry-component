@@ -5,7 +5,7 @@ module ErrorTelemetryComponent
         def self.example(error_id=nil)
           error_id ||= Controls::ID.example
 
-          message = ErrorTelemetryComponent::Error::Messages::Events::Published.new
+          message = ErrorTelemetryComponent::Messages::Events::Published.new
 
           message.error_id = error_id
           message.time = Controls::Time.example

@@ -5,7 +5,7 @@ module ErrorTelemetryComponent
         def self.example(error_id=nil)
           error_id ||= Controls::ID.example
 
-          message = ErrorTelemetryComponent::Error::Messages::Events::Recorded.new
+          message = ErrorTelemetryComponent::Messages::Events::Recorded.new
 
           message.error_id = error_id
           message.hostname = Controls::Host.name
