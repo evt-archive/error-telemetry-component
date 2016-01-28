@@ -8,7 +8,7 @@ context "Store" do
   id = EventStore::Messaging::StreamName.get_id(stream_name)
   category_name = stream_name.split('-')[0]
 
-  store = ErrorTelemetryComponent::Error::Store.build
+  store = ErrorTelemetryComponent::Store.build
 
   store.category_name = category_name
 

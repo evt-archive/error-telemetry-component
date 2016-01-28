@@ -6,7 +6,7 @@ module ErrorTelemetryComponent
         substitutes = Array(substitute)
         recorded_event ||= ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
-        publish_error = ErrorTelemetryComponent::Error::Publish.build(recorded_event)
+        publish_error = ErrorTelemetryComponent::Publish.build(recorded_event)
 
         substitutes.each do |name|
           SubstAttr::Substitute.(name, publish_error)
