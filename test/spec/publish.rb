@@ -21,9 +21,11 @@ context "Publish an Error to Raygun" do
     published_event_control = ErrorTelemetryComponent::Controls::Messages::Published.example
     published_stream_name = ErrorTelemetryComponent::Controls::StreamName.get('error', published_event_control.error_id, random: false)
 
-    assert(writer.written? do |event, stream_name|
-      event == published_event_control &&
-        stream_name == published_stream_name
-    end)
+    assert writer do
+      written? do |event, stream_name|
+        event == published_event_control &&
+          stream_name == published_stream_name
+      end
+    end
   end
 end
