@@ -1,6 +1,6 @@
 require_relative './spec_init'
 
-context "Handle Published Event" do
+context "Handle Recorded Event" do
   handler = ErrorTelemetryComponent::Handlers::Recorded.build
 
   publish = ErrorTelemetryComponent::Controls::PublishError.example substitute: [:raygun_post, :writer]
