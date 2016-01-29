@@ -9,7 +9,7 @@ context "Error Projection" do
 
     projection.apply recorded
 
-    context "Enttesty Data" do
+    context "Entity Data" do
       test "id" do
         assert(entity.id == recorded.error_id)
       end
@@ -36,7 +36,7 @@ context "Error Projection" do
 
     projection.apply published
 
-    context "Enttesty Data" do
+    context "Entity Data" do
       test "published_time" do
         assert(entity.published_time == published.time)
       end

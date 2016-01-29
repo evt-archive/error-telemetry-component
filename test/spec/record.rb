@@ -12,11 +12,11 @@ context "Recording an Error" do
   read_data = EventStore::Client::HTTP::EventData::Read.parse body_text
 
   context "Writes the recorded event" do
-    test "Event type" do
+    test "Event Type" do
       assert(read_data.type == event.message_type)
     end
 
-    test "Error" do
+    test "error" do
       read_error = read_data.data['error']
 
       recorded_error = record_error.error_data
@@ -26,14 +26,14 @@ context "Recording an Error" do
       assert(read_error == recorded_error)
     end
 
-    test "Hostname" do
+    test "hostname" do
       recorded_hostname = record_error.host_info.hostname
       read_hostname = read_data.data['hostname']
 
       assert(read_hostname == recorded_hostname)
     end
 
-    test "Time" do
+    test "time" do
       recorded_time = record_error.clock.now
       read_time = read_data.data['time']
 
