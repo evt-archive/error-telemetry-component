@@ -3,7 +3,6 @@ module ErrorTelemetryComponent
     class Record
       include EventStore::Messaging::Handler
       include EventStore::Messaging::StreamName
-      include Messages::Events
 
       dependency :store, Store
       dependency :writer, EventStore::Messaging::Writer
@@ -15,7 +14,7 @@ module ErrorTelemetryComponent
         EventStore::Messaging::Writer.configure self
       end
 
-      handle Record do |command|
+      handle Messages::Commands::Record do |command|
         version = store.get_version command.error_id
         if version != :no_stream
           return

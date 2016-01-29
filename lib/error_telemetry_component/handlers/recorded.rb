@@ -3,7 +3,6 @@ module ErrorTelemetryComponent
     class Recorded
       include EventStore::Messaging::Handler
       include EventStore::Messaging::StreamName
-      include Messages::Events
 
       dependency :clock, Clock::UTC
       dependency :writer, EventStore::Messaging::Writer
@@ -17,7 +16,7 @@ module ErrorTelemetryComponent
         ErrorTelemetryComponent::Publish.configure self
       end
 
-      handle Recorded do |event|
+      handle Messages::Events::Recorded do |event|
         publish.(event)
       end
     end
