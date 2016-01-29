@@ -1,12 +1,6 @@
 require_relative './spec_init'
 
-    # handler clock is set to time + lapse interval
-    # send recorded event
-    # writes NotPublished
-    # Note: projection: entity picks up the Lapsed time
-    # from the Lapsed event
-
-context "Recorded lapses" do
+context "Recorded event lapses" do
   recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
   recorded_time = Time.parse("Jan 1 1:00:00 GMT 2000")
