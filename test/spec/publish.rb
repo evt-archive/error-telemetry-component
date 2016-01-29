@@ -9,12 +9,12 @@ context "Publish an Error to Raygun" do
   writer = publish_error.writer
 
   raygun_post = publish_error.raygun_post
-  sink = RaygunClient::HTTP::Post.register_telemetry_sink(raygun_post)
+  raygun_sink = RaygunClient::HTTP::Post.register_telemetry_sink(raygun_post)
 
   publish_error.(recorded_event)
 
   test "Sends the error to Raygun" do
-    assert(sink.recorded_posted?)
+    assert(raygun_sink.recorded_posted?)
   end
 
   test "Writes the published event" do
