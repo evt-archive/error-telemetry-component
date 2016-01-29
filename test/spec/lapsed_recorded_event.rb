@@ -9,7 +9,7 @@ context "Recorded event lapses" do
   now = Time.parse("Jan 2 1:00:01 GMT 2000")
   lapsed = recorded_event.lapsed?(now)
 
-  test "After #{recorded_event.class.effective_hours} 24 hours" do
+  test "After #{recorded_event.class.effective_hours} hours" do
     assert lapsed
   end
 end
