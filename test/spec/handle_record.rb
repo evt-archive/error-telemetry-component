@@ -3,13 +3,13 @@ require_relative './spec_init'
 context "Handle Record Command" do
   handler = ErrorTelemetryComponent::Handlers::Record.new
   error = ErrorTelemetryComponent::Controls::Error.example
-  command = ErrorTelemetryComponent::Controls::Messages::Record.example
+  record_command = ErrorTelemetryComponent::Controls::Messages::Record.example
 
   context "Records the error" do
     test do
       expected_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
-      handler.handle_record command
+      handler.handle_record record_command
 
       assert handler.writer do
         written? do |event|
@@ -19,7 +19,7 @@ context "Handle Record Command" do
     end
 
     test "Writes the initial message" do
-      handler.handle_record command
+      handler.handle_record record_command
 
       assert handler.writer do
         written? do |_, _, version|

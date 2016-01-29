@@ -1,6 +1,7 @@
 require_relative './spec_init'
 
 context "Publish an Error to Raygun" do
+  ## TODO Why ||= [Scott, Thu Jan 28 2016]
   recorded_event ||= ErrorTelemetryComponent::Controls::Messages::Recorded.example
 
   substitute = :clock
