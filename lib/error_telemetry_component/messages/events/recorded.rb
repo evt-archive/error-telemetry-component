@@ -18,6 +18,22 @@ module ErrorTelemetryComponent
             instance.error = error_data
           end
         end
+
+        def lapsed?(now)
+          elapsed_milliseconds(now) > self.class.effective_milliseconds
+        end
+
+        def elapsed_milliseconds(now)
+          Clock.elapsed_milliseconds(time, now)
+        end
+
+        def self.effective_milliseconds
+          effective_hours * 60 * 60 * 1000
+        end
+
+        def self.effective_hours
+          24
+        end
       end
     end
   end
