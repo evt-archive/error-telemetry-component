@@ -42,4 +42,19 @@ context "Error Projection" do
       end
     end
   end
+
+  context "Lapsed" do
+    entity = ErrorTelemetryComponent::Entity.new
+    projection = ErrorTelemetryComponent::Projection.new entity
+
+    lapsed = ErrorTelemetryComponent::Controls::Messages::Lapsed.example
+
+    projection.apply lapsed
+
+    context "Entity Data" do
+      test "lapsed_time" do
+        assert(entity.lapsed_time == lapsed.time)
+      end
+    end
+  end
 end

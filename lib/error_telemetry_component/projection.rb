@@ -17,5 +17,11 @@ module ErrorTelemetryComponent
         {:time => :published_time}
       ])
     end
+
+    apply Lapsed do |event|
+      SetAttributes.(entity, event, copy: [
+        {:time => :lapsed_time}
+      ])
+    end
   end
 end
