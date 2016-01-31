@@ -16,6 +16,7 @@ module ErrorTelemetryComponent
 
       handle Messages::Commands::Record do |command|
         version = store.get_version command.error_id
+
         if version != :no_stream
           return
         end
