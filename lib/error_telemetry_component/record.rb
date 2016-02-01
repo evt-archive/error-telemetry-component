@@ -44,7 +44,7 @@ module ErrorTelemetryComponent
 
       writer.write event, event_stream_name
 
-      logger.debug "Recoded error (#{LogText::RecordEvent.(event)})"
+      logger.info "Recoded error (#{LogText::RecordEvent.(event)})"
 
       return event, event_stream_name
     end

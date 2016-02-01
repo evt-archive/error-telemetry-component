@@ -30,7 +30,7 @@ module ErrorTelemetryComponent
         module Lapsed
           def self.example(error_id=nil, time: nil)
             time ||= LapseTime.example
-            Recorded.example(time)
+            Recorded.example(error_id, time: time)
           end
         end
       end
