@@ -24,6 +24,14 @@ module ErrorTelemetryComponent
         def lapsed?(now)
           elapsed_milliseconds(now) > self.class.effective_milliseconds
         end
+
+        module LogText
+          module Completion
+            def self.call(event)
+              "Published error (Error ID: #{event.error_id})"
+            end
+          end
+        end
       end
     end
   end

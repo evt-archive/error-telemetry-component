@@ -32,7 +32,7 @@ module ErrorTelemetryComponent
     end
 
     def call(recorded_event)
-      logger.trace "Received error to publish (#{LogText::RecordedEvent.(recorded_event)})"
+      logger.trace "Handling recorded error (#{LogText::RecordedEvent.(recorded_event)})"
 
       unless recorded_event.lapsed?(clock.now)
         event, event_stream_name = send_error_to_raygun(recorded_event)
@@ -40,12 +40,13 @@ module ErrorTelemetryComponent
         event, event_stream_name = record_lapsed_event(recorded_event)
       end
 
-      logger.info "Done publishing"
+      logger.info event.class::LogText::Completion.(event)
 
       return event, event_stream_name
     end
 
     def send_error_to_raygun(recorded_event)
+      logger.trace "Sending error to Raygun (#{LogText::RecordedEvent.(recorded_event)})"
       raygun_data = ConvertErrorData.(recorded_event)
 
       response = raygun_post.(raygun_data)
@@ -59,7 +60,7 @@ module ErrorTelemetryComponent
     end
 
     def record_published_event(recorded_event)
-      logger.trace "Recording published event (Error ID: #{recorded_event.error_id})"
+      logger.trace "Recording published event (#{LogText::RecordedEvent.(recorded_event)})"
 
       event = Published.proceed(recorded_event, copy: [
         :error_id
@@ -72,13 +73,13 @@ module ErrorTelemetryComponent
       writer.write event, event_stream_name
       telemetry.record :wrote_event, Telemetry::EventData.new(event, event_stream_name)
 
-      logger.debug "Recorded published event (Error ID: #{event.error_id})"
+      logger.debug "Recorded published event (Error ID: #{event.error_id}, Published Time: #{event.time})"
 
       return event, event_stream_name
     end
 
     def record_lapsed_event(recorded_event)
-      logger.trace "Recording lapsed event (Error ID: #{recorded_event.error_id})"
+      logger.trace "Recording lapsed event (#{LogText::RecordedEvent.(recorded_event)})"
 
       event = Lapsed.proceed(recorded_event, copy: [
         :error_id
@@ -91,7 +92,7 @@ module ErrorTelemetryComponent
       writer.write event, event_stream_name
       telemetry.record :wrote_event, Telemetry::EventData.new(event, event_stream_name)
 
-      logger.debug "Recorded lapsed event (Error ID: #{event.error_id})"
+      logger.debug "Recorded lapsed event (Error ID: #{event.error_id}, Lapsed Time: #{event.time})"
 
       return event, event_stream_name
     end

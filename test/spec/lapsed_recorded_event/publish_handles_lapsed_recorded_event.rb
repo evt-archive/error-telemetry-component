@@ -2,8 +2,6 @@ require_relative '../spec_init'
 
 context "Publish" do
   context "Recorded event has lapsed" do
-
-
     recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded::Lapsed.example
 
     now = ErrorTelemetryComponent::Controls::LapseTime.now
