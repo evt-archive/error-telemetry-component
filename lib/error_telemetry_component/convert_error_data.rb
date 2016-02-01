@@ -11,7 +11,6 @@ module ErrorTelemetryComponent
       data.client = RaygunClient::Data::ClientInfo.build
 
       raw_error_data = Casing::Underscore.(recorded_event.error)
-
       error_data = ErrorData.build(raw_error_data)
 
       data.error = error_data
