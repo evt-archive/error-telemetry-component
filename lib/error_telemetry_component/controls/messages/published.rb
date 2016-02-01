@@ -2,13 +2,14 @@ module ErrorTelemetryComponent
   module Controls
     module Messages
       module Published
-        def self.example(error_id=nil)
+        def self.example(error_id=nil, time: nil)
           error_id ||= Controls::ID.example
+          time ||= Controls::Time.example
 
           message = ErrorTelemetryComponent::Messages::Events::Published.new
 
           message.error_id = error_id
-          message.time = Controls::Time.example
+          message.time = time
 
           message
         end

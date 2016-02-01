@@ -2,13 +2,13 @@ require_relative './spec_init'
 
 context "Publish" do
   context "Publish an Error to Raygun" do
-    lapse_time = ErrorTelemetryComponent::Controls::LapseTime.example
-    recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example(time: lapse_time)
+    time = ErrorTelemetryComponent::Controls::LapseTime.example
+    recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example(time: time)
 
     substitute = [:clock, :writer, :raygun_post]
     publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
 
-    publish_error.clock.now = Time.parse(lapse_time)
+    publish_error.clock.now = Time.parse(time)
 
     writer = publish_error.writer
 
@@ -18,27 +18,23 @@ context "Publish" do
     publish_error.(recorded_event)
 
     test "Sends the error to Raygun" do
-      control_data = ErrorTelemetryComponent::Controls::RaygunData.example
+      control_data = ErrorTelemetryComponent::Controls::RaygunData.example(time: time)
 
       assert raygun_sink do
 
         posted? do |data|
-
-          __logger.focus control_data.inspect
-          __logger.focus data.inspect
-
           data == control_data
         end
       end
     end
 
     test "Writes the published event" do
-      published_event_control = ErrorTelemetryComponent::Controls::Messages::Published.example
+      published_event_control = ErrorTelemetryComponent::Controls::Messages::Published.example(time: time)
       published_stream_name = ErrorTelemetryComponent::Controls::StreamName.get('error', published_event_control.error_id, random: false)
 
       assert writer do
         written? do |event, stream_name|
-          event == published_event_control &&
+          event.attributes == published_event_control.attributes &&
             stream_name == published_stream_name
         end
       end

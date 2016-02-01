@@ -4,7 +4,7 @@ module ErrorTelemetryComponent
       module Lapsed
         def self.example(error_id=nil, time: nil)
           error_id ||= Controls::ID.example
-          time ||= LapseTime.now_iso8691
+          time ||= LapseTime.now_iso8601
 
           message = ErrorTelemetryComponent::Messages::Events::Lapsed.new
 
