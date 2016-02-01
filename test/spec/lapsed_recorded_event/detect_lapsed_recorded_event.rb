@@ -1,9 +1,9 @@
 require_relative '../spec_init'
 
 context "Recorded event lapses" do
-  control = ErrorTelemetryComponent::Controls::Messages::Recorded::Lapsed
-  recorded_event = control.example
-  now = control.now
+  recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded::Lapsed.example
+
+  now = ErrorTelemetryComponent::Controls::LapseTime.now
 
   lapsed = recorded_event.lapsed?(now)
 

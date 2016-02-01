@@ -13,12 +13,16 @@ module ErrorTelemetryComponent
     module EffectiveTime
       extend self
 
-      def effective_milliseconds
-        effective_hours * 60 * 60 * 1000
-      end
-
       def effective_hours
         24
+      end
+
+      def effective_seconds
+        effective_hours * 60 * 60
+      end
+
+      def effective_milliseconds
+        effective_seconds * 1000
       end
     end
   end
