@@ -6,6 +6,7 @@ require 'raygun_client'
 require 'initializer'; Initializer.activate
 
 require 'error_telemetry_component/host_info'
+require 'error_telemetry_component/lapse'
 require 'error_telemetry_component/messages/commands/record'
 require 'error_telemetry_component/messages/events/recorded'
 require 'error_telemetry_component/messages/events/published'
