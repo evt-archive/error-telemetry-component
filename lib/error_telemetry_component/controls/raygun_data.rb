@@ -1,5 +1,10 @@
 module ErrorTelemetryComponent
   module Controls
-    RaygunData = RaygunClient::Controls::Data
+    module RaygunData
+      def self.example(custom_data=nil)
+        custom_data ||= { error_id: Controls::ID.example }
+        RaygunClient::Controls::Data.example(custom_data)
+      end
+    end
   end
 end

@@ -2,10 +2,13 @@ require_relative './spec_init'
 
 context "Publish" do
   context "Publish an Error to Raygun" do
-    recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
+    lapse_time = ErrorTelemetryComponent::Controls::LapseTime.example
+    recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example(time: lapse_time)
 
     substitute = [:clock, :writer, :raygun_post]
     publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
+
+    publish_error.clock.now = Time.parse(lapse_time)
 
     writer = publish_error.writer
 
@@ -18,7 +21,14 @@ context "Publish" do
       control_data = ErrorTelemetryComponent::Controls::RaygunData.example
 
       assert raygun_sink do
-        posted? { |data| data == control_data}
+
+        posted? do |data|
+
+          __logger.focus control_data.inspect
+          __logger.focus data.inspect
+
+          data == control_data
+        end
       end
     end
 
