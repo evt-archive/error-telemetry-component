@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative '../spec_init'
 
 context "Publish" do
   context "Recorded event has lapsed" do
