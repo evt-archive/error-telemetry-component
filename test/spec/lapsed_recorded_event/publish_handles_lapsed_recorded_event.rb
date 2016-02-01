@@ -25,5 +25,28 @@ context "Publish" do
         posts.length == 0
       end
     end
+
+    test "Writes the lapsed event" do
+      lapsed_event_control = ErrorTelemetryComponent::Controls::Messages::Lapsed.example
+      published_stream_name = ErrorTelemetryComponent::Controls::StreamName.get('error', lapsed_event_control.error_id, random: false)
+
+      assert writer do
+        written? do |event, stream_name|
+
+          event.metadata = nil
+
+          __logger.focus lapsed_event_control.attributes.inspect
+          __logger.focus event.attributes.inspect
+
+          __logger.focus "control: #{lapsed_event_control.inspect}"
+          __logger.focus "written: #{event.inspect}"
+
+
+          event == lapsed_event_control &&
+            stream_name == published_stream_name
+        end
+      end
+    end
+
   end
 end

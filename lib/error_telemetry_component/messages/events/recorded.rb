@@ -14,6 +14,7 @@ module ErrorTelemetryComponent
           new.tap do |instance|
             SetAttributes.(instance, data, exclude: :error)
 
+            ## TODO Remove this. It should not be a complex object. [Scott, Sun Jan 31 2016]
             error_data = ErrorData.build data['error']
 
             instance.error = error_data
