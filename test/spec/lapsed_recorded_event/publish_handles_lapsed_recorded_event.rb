@@ -2,7 +2,7 @@ require_relative '../spec_init'
 
 context "Publish" do
   context "Recorded event has lapsed" do
-    test #do
+    test do
       # handler clock is set to time + lapse interval
       # send recorded event
       # writes NotPublished
@@ -10,13 +10,14 @@ context "Publish" do
       # from the Lapsed event
 
 
-      # recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
+      recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded::Lapsed.example
 
-      # recorded_time = Time.parse("Jan 1 1:00:00 GMT 2000")
-      # recorded_event.time = Clock.iso8601(recorded_time)
+      now = ErrorTelemetryComponent::Controls::LapseTime.now
 
-      # now = Time.parse("Jan 2 1:00:01 GMT 2000")
+      substitute = [:clock, :writer, :raygun_post]
+      publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
 
-    # end
+      publish_error.clock.now = now
+    end
   end
 end
