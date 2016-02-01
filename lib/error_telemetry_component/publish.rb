@@ -34,14 +34,14 @@ module ErrorTelemetryComponent
     def call(recorded_event)
       logger.trace "Publishing error"
 
-      data = ConvertErrorData.(recorded_event)
+      raygun_data = ConvertErrorData.(recorded_event)
 
-      response = raygun_post.(data)
+      response = raygun_post.(raygun_data)
       telemetry.record :published, Telemetry::EventData.new(response)
 
       event, event_stream_name = record_published_event(recorded_event)
 
-      logger.debug "Published error (#{LogText::RaygunData.(data)})"
+      logger.debug "Published error (#{LogText::RaygunData.(raygun_data)})"
 
       return event, event_stream_name
     end
@@ -89,8 +89,8 @@ module ErrorTelemetryComponent
 
     module LogText
       module RaygunData
-        def self.call(data)
-          "Error ID: #{data.custom_data[:error_id]}, Error Message: #{data.error.message}, Occurred: #{data.occurred_time}, Hostname: #{data.machine_name})"
+        def self.call(raygun_data)
+          "Error ID: #{raygun_data.custom_data[:error_id]}, Error Message: #{raygun_data.error.message}, Occurred: #{raygun_data.occurred_time}, Hostname: #{raygun_data.machine_name})"
         end
       end
     end
