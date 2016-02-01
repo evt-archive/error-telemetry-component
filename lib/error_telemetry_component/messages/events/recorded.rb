@@ -19,6 +19,8 @@ module ErrorTelemetryComponent
           end
         end
 
+        # TODO Move out [Scott, Sun Jan 31 2016]
+        # Controls need access to this, too
         def lapsed?(now)
           elapsed_milliseconds(now) > self.class.effective_milliseconds
         end

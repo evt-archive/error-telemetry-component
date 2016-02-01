@@ -26,6 +26,22 @@ module ErrorTelemetryComponent
 
           data
         end
+
+        module Lapsed
+          def self.example(error_id=nil, time: nil)
+            time ||= self.time
+            Recorded.example(time)
+          end
+
+          def self.time(error_id=nil, time: nil)
+            time = ::Time.parse("Jan 1 1:00:00 GMT 2000")
+            Clock.iso8601(time)
+          end
+
+          def self.now
+            ::Time.parse("Jan 2 1:00:01 GMT 2000")
+          end
+        end
       end
     end
   end
