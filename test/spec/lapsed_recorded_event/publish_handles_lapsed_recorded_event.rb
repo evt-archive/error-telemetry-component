@@ -4,7 +4,7 @@ context "Publish" do
   context "Recorded event has lapsed" do
     recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded::Lapsed.example
 
-    now = ErrorTelemetryComponent::Controls::LapseTime.now
+    now = ErrorTelemetryComponent::Controls::LapseTime::Raw.later
 
     substitute = [:clock, :writer, :raygun_post]
     publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
