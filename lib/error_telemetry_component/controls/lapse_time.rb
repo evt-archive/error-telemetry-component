@@ -14,6 +14,11 @@ module ErrorTelemetryComponent
         time
       end
 
+      def self.now_iso8691(time=nil)
+        time = now(time)
+        Clock.iso8601(time)
+      end
+
       def self.effective_seconds
         ErrorTelemetryComponent::Lapse::EffectiveTime.effective_seconds
       end

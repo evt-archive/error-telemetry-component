@@ -32,21 +32,10 @@ context "Publish" do
 
       assert writer do
         written? do |event, stream_name|
-
-          event.metadata = nil
-
-          __logger.focus lapsed_event_control.attributes.inspect
-          __logger.focus event.attributes.inspect
-
-          __logger.focus "control: #{lapsed_event_control.inspect}"
-          __logger.focus "written: #{event.inspect}"
-
-
-          event == lapsed_event_control &&
+          event.attributes == lapsed_event_control.attributes &&
             stream_name == published_stream_name
         end
       end
     end
-
   end
 end
