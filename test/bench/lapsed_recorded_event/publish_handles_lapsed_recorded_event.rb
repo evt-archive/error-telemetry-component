@@ -6,7 +6,7 @@ context "Publish" do
 
     now = ErrorTelemetryComponent::Controls::LapseTime::Raw.later
 
-    substitute = [:clock, :writer, :raygun_post]
+    substitute = [:clock, :writer, :raygun_post, :store]
     publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
 
     publish_error.clock.now = now
