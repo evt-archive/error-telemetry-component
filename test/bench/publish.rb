@@ -5,7 +5,7 @@ context "Publish" do
     time = ErrorTelemetryComponent::Controls::LapseTime.example
     recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example(time: time)
 
-    substitute = [:clock, :writer, :raygun_post]
+    substitute = [:clock, :writer, :raygun_post, :store]
     publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
 
     publish_error.clock.now = Time.parse(time)
@@ -37,6 +37,21 @@ context "Publish" do
             stream_name == published_stream_name
         end
       end
+    end
+  end
+
+  test "Does not republish an error that has already been published" do
+    recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded.example
+    entity = ErrorTelemetryComponent::Controls::Entity::Finished.example
+
+    substitute = [:clock, :writer, :raygun_post, :store]
+    publish_error = ErrorTelemetryComponent::Controls::PublishError.example(substitute: substitute)
+    publish_error.store.add recorded_event.error_id, entity
+
+    publish_error.(recorded_event)
+
+    assert publish_error.writer do
+      writes.none?
     end
   end
 end
