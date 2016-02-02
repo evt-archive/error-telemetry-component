@@ -36,8 +36,6 @@ module ErrorTelemetryComponent
     def call(recorded_event)
       logger.trace "Handling recorded error (#{LogText::RecordedEvent.(recorded_event)})"
 
-      logger.trace "Retrieving error from store (Error ID: #{recorded_event.error_id})"
-
       return if finished? recorded_event
 
       unless recorded_event.lapsed?(clock.now)
@@ -52,6 +50,8 @@ module ErrorTelemetryComponent
     end
 
     def finished?(recorded_event)
+      logger.trace "Retrieving error from store (Error ID: #{recorded_event.error_id})"
+
       entity, version = store.get recorded_event.error_id, :include => :version
 
       if entity && entity.finished?
