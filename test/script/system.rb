@@ -1,5 +1,12 @@
 require_relative './script_init'
 
-error = ErrorTelemetryComponent::Controls::Error.example
+recent_error = ErrorTelemetryComponent::Controls::Error.example
+lapsed_error = ErrorTelemetryComponent::Controls::Error.example
 
-ErrorTelemetryComponent::Record.(error)
+record = ErrorTelemetryComponent::Record.build recent_error
+record.()
+
+record = ErrorTelemetryComponent::Record.build lapsed_error
+SubstAttr::Substitute.(:clock, record)
+record.clock.now = Controls::Time::Raw.example
+record.()
