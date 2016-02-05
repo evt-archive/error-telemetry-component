@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 context "Store" do
   writer = EventStore::Messaging::Writer.build
@@ -14,7 +14,7 @@ context "Store" do
 
   context "Get Entity" do
     recorded = ErrorTelemetryComponent::Controls::Messages::Recorded.example
-    error_data = ::Serialize::Write.raw_data(recorded.error, :json)
+    error_data = ::Serialize::Write.raw_data(recorded.error)
     recorded.error = error_data
     writer.write recorded, stream_name
 

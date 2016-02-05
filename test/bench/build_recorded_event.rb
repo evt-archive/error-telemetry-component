@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 context "Building Recorded Event from Raw Data" do
   test "Converts the error data to an ErrorData instance" do

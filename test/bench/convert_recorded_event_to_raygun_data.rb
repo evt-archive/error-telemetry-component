@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 context "Convert Recorded Event to Raygun Data" do
   compare_raygun_data = ErrorTelemetryComponent::Controls::RaygunData.example

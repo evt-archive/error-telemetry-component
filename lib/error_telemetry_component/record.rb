@@ -40,7 +40,7 @@ module ErrorTelemetryComponent
       # TODO !!! clock.iso8601
       event.time = clock.now
 
-      event.error = ::Serialize::Write.raw_data(error_data, :json)
+      event.error = ::Serialize::Write.raw_data(error_data)
 
       event_stream_name = stream_name(event.error_id)
 
@@ -52,7 +52,7 @@ module ErrorTelemetryComponent
     end
 
     def self.import_error(error)
-      ErrorData::Import.(error)
+      ErrorData::Convert::Error.(error)
     end
 
     module LogText

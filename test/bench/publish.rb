@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 context "Publish" do
   context "Publish an Error to Raygun" do

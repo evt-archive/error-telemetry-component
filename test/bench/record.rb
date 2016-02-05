@@ -1,4 +1,4 @@
-require_relative './spec_init'
+require_relative './bench_init'
 
 context "Recording an Error" do
   substitute = [:host_info, :clock]
@@ -20,7 +20,7 @@ context "Recording an Error" do
       read_error = read_data.data['error']
 
       recorded_error = record_error.error_data
-      recorded_error = ::Serialize::Write.raw_data(recorded_error, :json)
+      recorded_error = ::Serialize::Write.raw_data(recorded_error)
       recorded_error = Casing::Underscore.(recorded_error, symbol_to_string: true)
 
       assert(read_error == recorded_error)

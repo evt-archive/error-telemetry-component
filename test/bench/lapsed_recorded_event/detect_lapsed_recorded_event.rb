@@ -1,4 +1,4 @@
-require_relative '../spec_init'
+require_relative '../bench_init'
 
 context "Recorded event lapses" do
   recorded_event = ErrorTelemetryComponent::Controls::Messages::Recorded::Lapsed.example
