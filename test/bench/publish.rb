@@ -21,7 +21,6 @@ context "Publish" do
       control_data = ErrorTelemetryComponent::Controls::RaygunData.example(time: time)
 
       assert raygun_sink do
-
         posted? do |data|
           data == control_data
         end

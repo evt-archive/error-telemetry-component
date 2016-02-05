@@ -2,6 +2,8 @@ require_relative './bench_init'
 
 context "Handle Record Command" do
   handler = ErrorTelemetryComponent::Handlers::Record.new
+  handler.clock.now = Controls::Time::Raw.example
+
   error = ErrorTelemetryComponent::Controls::Error.example
   record_command = ErrorTelemetryComponent::Controls::Messages::Record.example
 

@@ -45,7 +45,8 @@ module ErrorTelemetryComponent
           end
 
           def self.instance(raw_data)
-            raw_data = Casing::Underscore.(raw_data)
+            Telemetry::Logger.get(self).fubar "Remove special handling of string keys after event-store-messaging starts emitting underscore cased symbol keys [Nathan Ladd, Scott Bellware, Fri Feb 5 2016]"
+            raw_data = JSON.parse(JSON.generate(raw_data), :symbolize_names => true)
 
             instance = Recorded.new
 

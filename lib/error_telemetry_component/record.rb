@@ -40,13 +40,13 @@ module ErrorTelemetryComponent
 
       command.time = clock.iso8601
 
-      event_stream_name = stream_name(command.error_id)
+      command_stream_name = stream_name(command.error_id)
 
-      writer.write command, event_stream_name
+      writer.write command, command_stream_name
 
       logger.info "Recoded error (#{LogText::RecordCommand.(command)})"
 
-      return command, event_stream_name
+      return command, command_stream_name
     end
 
     def self.import_error(error)
