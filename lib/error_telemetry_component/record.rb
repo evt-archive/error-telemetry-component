@@ -37,8 +37,7 @@ module ErrorTelemetryComponent
       event.error_id = identifier.get
       event.hostname = host_info.hostname
 
-      # TODO !!! clock.iso8601
-      event.time = clock.now
+      event.time = clock.iso8601
 
       event.error = ::Serialize::Write.raw_data(error_data)
 

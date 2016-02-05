@@ -16,7 +16,7 @@ module ErrorTelemetryComponent
           end
 
           if name == :clock
-            record_error.clock.now = Controls::Time.example
+            record_error.clock.now = ::Time.parse(Controls::Time.example)
           end
         end
 

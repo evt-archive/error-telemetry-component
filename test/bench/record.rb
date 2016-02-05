@@ -34,7 +34,7 @@ context "Recording an Error" do
     end
 
     test "time" do
-      recorded_time = record_error.clock.now
+      recorded_time = record_error.clock.iso8601
       read_time = read_data.data['time']
 
       assert(read_time == recorded_time)
