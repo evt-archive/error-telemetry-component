@@ -40,7 +40,7 @@ module ErrorTelemetryComponent
 
       command.time = clock.iso8601
 
-      command_stream_name = stream_name(command.error_id)
+      command_stream_name = command_stream_name(command.error_id)
 
       writer.write command, command_stream_name
 

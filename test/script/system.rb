@@ -1,8 +1,5 @@
 require_relative './script_init'
 
-error_id = Identifier::UUID::Random.get
+error = ErrorTelemetryComponent::Controls::Error.example
 
-command_message = ErrorTelemetryComponent::Controls::Messages::Record.example
-
-writer = EventStore::Messaging::Writer.build
-writer.write(command_message, "error-#{error_id}")
+ErrorTelemetryComponent::Record.(error)
