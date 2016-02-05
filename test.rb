@@ -1,3 +1,2 @@
-require_relative './test/test_init'
+require_relative './test/bench'
 
-load 'test/spec.rb'
