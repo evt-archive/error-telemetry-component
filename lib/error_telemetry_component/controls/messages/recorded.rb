@@ -16,14 +16,13 @@ module ErrorTelemetryComponent
           message
         end
 
-        ## TODO Needed after serialize standards [Scott, Fri Feb 5 2016]
         def self.data
           data = {}
 
-          data['error_id'] = Controls::ID.example
-          data['hostname'] = Controls::Host.name
-          data['time'] = Controls::Time.example
-          data['error'] = Controls::ErrorData.example.to_h
+          data[:error_id] = Controls::ID.example
+          data[:hostname] = Controls::Host.name
+          data[:time] = Controls::Time.example
+          data[:error] = ErrorData.data
 
           data
         end
