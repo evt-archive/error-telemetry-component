@@ -47,7 +47,7 @@ module ErrorTelemetryComponent
 
     def send_error_to_raygun(recorded_event)
       logger.trace "Sending error to Raygun (#{LogText::RecordedEvent.(recorded_event)})"
-      raygun_data = ConvertErrorData.(recorded_event)
+      raygun_data = ConvertErrorData::RaygunData.(recorded_event)
 
       response = raygun_post.(raygun_data)
       telemetry.record :published, Telemetry::EventData.new(response)
