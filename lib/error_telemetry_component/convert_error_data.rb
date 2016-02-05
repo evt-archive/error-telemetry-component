@@ -1,4 +1,5 @@
 module ErrorTelemetryComponent
+  ## TODO ConvertErrorData::RaygunData
   class ConvertErrorData
     def self.call(recorded_event)
       logger.trace "Converting recorded event to Raygun data"
