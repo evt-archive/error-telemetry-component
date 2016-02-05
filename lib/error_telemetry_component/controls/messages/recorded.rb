@@ -16,6 +16,7 @@ module ErrorTelemetryComponent
           message
         end
 
+        ## TODO Needed after serialize standards [Scott, Fri Feb 5 2016]
         def self.data
           data = {}
 

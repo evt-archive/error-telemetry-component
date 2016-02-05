@@ -10,7 +10,7 @@ module ErrorTelemetryComponent
         attribute :hostname
         attribute :time
 
-        def self.build(data)
+        def self.___build(data)
           new.tap do |instance|
             SetAttributes.(instance, data, exclude: :error)
 

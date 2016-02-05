@@ -21,7 +21,7 @@ module ErrorTelemetryComponent
           return
         end
 
-        event = Messages::Events::Recorded.build command
+        event = Messages::Events::Recorded.proceed command
 
         stream_name = stream_name(event.error_id)
 
