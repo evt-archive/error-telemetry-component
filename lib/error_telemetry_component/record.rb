@@ -1,7 +1,6 @@
 module ErrorTelemetryComponent
   class Record
     include EventStore::Messaging::StreamName
-    include Messages::Events
 
     dependency :logger, Telemetry::Logger
     dependency :clock, Clock::UTC
@@ -33,21 +32,21 @@ module ErrorTelemetryComponent
     def call
       logger.trace "Recoding error"
 
-      event = Recorded.new
-      event.error_id = identifier.get
-      event.hostname = host_info.hostname
+      command = Messages::Commands::Record.new
+      command.error_id = identifier.get
+      command.hostname = host_info.hostname
 
-      event.time = clock.iso8601
+      command.error = error_data
 
-      event.error = ::Serialize::Write.raw_data(error_data)
+      command.time = clock.iso8601
 
-      event_stream_name = stream_name(event.error_id)
+      command_stream_name = command_stream_name(command.error_id)
 
-      writer.write event, event_stream_name
+      writer.write command, command_stream_name
 
-      logger.info "Recoded error (#{LogText::RecordEvent.(event)})"
+      logger.info "Recoded error (#{LogText::RecordCommand.(command)})"
 
-      return event, event_stream_name
+      return command, command_stream_name
     end
 
     def self.import_error(error)
@@ -55,9 +54,9 @@ module ErrorTelemetryComponent
     end
 
     module LogText
-      module RecordEvent
-        def self.call(record_event)
-          "Error ID: #{record_event.error_id}, Error Message: #{record_event.error[:message]}, Time: #{record_event.time}, Hostname: #{record_event.hostname})"
+      module RecordCommand
+        def self.call(command)
+          "Error ID: #{command.error_id}, Error Message: #{command.error.message}, Time: #{command.time}, Hostname: #{command.hostname})"
         end
       end
     end

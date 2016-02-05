@@ -14,17 +14,15 @@ context "Store" do
 
   context "Get Entity" do
     recorded = ErrorTelemetryComponent::Controls::Messages::Recorded.example
-    error_data = ::Serialize::Write.raw_data(recorded.error)
-    recorded.error = error_data
     writer.write recorded, stream_name
 
     published = ErrorTelemetryComponent::Controls::Messages::Published.example
     writer.write published, stream_name
 
-    enttesty = store.get id
+    entity = store.get id
 
     test "id" do
-      assert(enttesty.attributes.values.any? { |v| !v.nil? })
+      assert(entity.attributes.values.any? { |v| !v.nil? })
     end
   end
 end

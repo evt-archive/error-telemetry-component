@@ -7,6 +7,7 @@ module ErrorTelemetryComponent
     dependency :logger, ::Telemetry::Logger
     dependency :clock, Clock::UTC
     dependency :raygun_post, RaygunClient::HTTP::Post
+    dependency :store, Store
     dependency :writer, EventStore::Messaging::Writer
 
     category :error
@@ -17,6 +18,7 @@ module ErrorTelemetryComponent
         ::Telemetry::Logger.configure instance
         Clock::UTC.configure instance
         RaygunClient::HTTP::Post.configure instance, :raygun_post
+        Store.configure instance
         EventStore::Messaging::Writer.configure instance
       end
     end
@@ -34,6 +36,8 @@ module ErrorTelemetryComponent
     def call(recorded_event)
       logger.trace "Handling recorded error (#{LogText::RecordedEvent.(recorded_event)})"
 
+      return if finished? recorded_event
+
       unless recorded_event.lapsed?(clock.now)
         event, event_stream_name = send_error_to_raygun(recorded_event)
       else
@@ -43,6 +47,20 @@ module ErrorTelemetryComponent
       logger.info event.class::LogText::Completion.(event)
 
       return event, event_stream_name
+    end
+
+    def finished?(recorded_event)
+      logger.trace "Retrieving error from store (Error ID: #{recorded_event.error_id})"
+
+      entity, version = store.get recorded_event.error_id, :include => :version
+
+      if entity && entity.finished?
+        logger.debug "Error retrieved from store (Error ID: #{recorded_event.error_id}, Version: #{version}, Finished: true)"
+        true
+      else
+        logger.debug "Error retrieved from store (Error ID: #{recorded_event.error_id}, Version: #{version}, Finished: false)"
+        false
+      end
     end
 
     def send_error_to_raygun(recorded_event)

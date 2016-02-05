@@ -1,8 +1,12 @@
 require_relative './script_init'
 
-error_id = Identifier::UUID::Random.get
+recent_error = ErrorTelemetryComponent::Controls::Error.example
+lapsed_error = ErrorTelemetryComponent::Controls::Error.example
 
-command_message = ErrorTelemetryComponent::Controls::Messages::Record.example
+record = ErrorTelemetryComponent::Record.build recent_error
+record.()
 
-writer = EventStore::Messaging::Writer.build
-writer.write(command_message, "error-#{error_id}")
+record = ErrorTelemetryComponent::Record.build lapsed_error
+SubstAttr::Substitute.(:clock, record)
+record.clock.now = Controls::Time::Raw.example
+record.()
