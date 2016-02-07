@@ -10,3 +10,4 @@ gems
 materials
 *.gem
 *notes.*
+settings/raygun_client.json
