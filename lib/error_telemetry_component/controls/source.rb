@@ -1,5 +1,9 @@
 module ErrorTelemetryComponent
   module Controls
-    Source = Client::Controls::Source
+    module Source
+      def self.example
+        'some-source'
+      end
+    end
   end
 end

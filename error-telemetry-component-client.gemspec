@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.licenses = ['Not licensed for public use']
 
   s.require_paths = ['lib']
-  s.files = Dir.glob 'lib/error_telemetry_component/{client.rb,host_info.rb,messages/commands/record.rb,record.rb,client/**/*.rb,controls/client.rb}'
+  s.files = Dir.glob 'lib/error_telemetry_component/{messages/commands/record.rb,host_info.rb,record.rb,record.rb,controls/error.rb,controls/record_error.rb,controls/source.rb,controls/time.rb,client/**/*.rb}'
   s.platform = Gem::Platform::RUBY
   s.bindir = 'bin'
 
