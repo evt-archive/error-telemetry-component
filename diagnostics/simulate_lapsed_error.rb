@@ -1,8 +1,10 @@
 require_relative './diagnostics_init'
 
-error = ErrorTelemetryComponent::Controls::Error.example
+source = 'error-telemetry'
 
-record = ErrorTelemetryComponent::Record.build error, 'error-telemetry'
+error = ErrorTelemetryComponent::Controls::Error::Simulated.example('Simulated lapsed error')
+
+record = ErrorTelemetryComponent::Record.build error, source
 
 SubstAttr::Substitute.(:clock, record)
 record.clock.now = Controls::Time::Raw.example
