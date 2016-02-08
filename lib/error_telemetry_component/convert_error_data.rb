@@ -16,6 +16,7 @@ module ErrorTelemetryComponent
 
         data.error = error_data
 
+        data.tags = Array(recorded_event.source)
         data.custom_data = { :error_id => recorded_event.error_id }
 
         logger.debug "Converted recorded event to Raygun data"
