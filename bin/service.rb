@@ -1,6 +1,18 @@
 class Service
   dependency :logger, Telemetry::Logger
 
+  # TODO Macro in service abstraction that records the service name
+  # service_name 'error-telemetry'
+
+  # TODO Macro in service abstraction that records the service identifier
+  # Note: Is this needed given the service name? Without it, service names
+  # are permanent and immutable
+  # service_identifier '{some uuid}'
+
+  def self.service_name
+    'error-telemetry'
+  end
+
   initializer :service_name
 
   def self.build(service_name)
@@ -17,11 +29,23 @@ class Service
 
   def start
     announce_start
+    start_components
     service_name
   end
 
-  def self.service_name
-    'error-telemetry'
+  def start_components
+    dispatcher = ErrorTelemetryComponent::Dispatcher.build
+    command_subscription = EventStore::Messaging::Subscription.build '$ce-error:command', dispatcher
+    event_subscription = EventStore::Messaging::Subscription.build '$ce-error', dispatcher
+
+    cooperation = ProcessHost::Cooperation.build
+
+    cooperation.register command_subscription, 'command-handlers'
+    cooperation.register event_subscription, 'event-handlers'
+
+    # TODO Still need name for this version of start [Scott, Sun Feb 7 2016]
+    # TODO Would be good to have a shutdown message, but need atomic unit of work [Scott, Sun Feb 7 2016]
+    cooperation.start!
   end
 
   def announce_start
