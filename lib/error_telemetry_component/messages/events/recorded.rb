@@ -6,10 +6,10 @@ module ErrorTelemetryComponent
         include Lapse
 
         attribute :error_id
-        attribute :error
-        attribute :hostname
-        attribute :source
         attribute :time
+        attribute :source
+        attribute :hostname
+        attribute :error
 
         def self.build(data=nil)
           data ||= {}
