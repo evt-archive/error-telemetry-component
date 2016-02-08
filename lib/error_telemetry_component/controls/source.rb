@@ -2,7 +2,7 @@ module ErrorTelemetryComponent
   module Controls
     module Source
       def self.example
-        RaygunClient::Controls::Data.source
+        'some-source'
       end
     end
   end
