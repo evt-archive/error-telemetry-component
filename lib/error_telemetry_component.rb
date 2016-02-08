@@ -1,6 +1,3 @@
-require 'socket'
-
-require 'eventide'
 require 'raygun_client'
 
 require 'initializer'; Initializer.activate

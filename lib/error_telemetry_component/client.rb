@@ -1,3 +1,5 @@
+require 'socket'
+
 require 'eventide'
 require 'error_data'
 require 'initializer'; Initializer.activate
