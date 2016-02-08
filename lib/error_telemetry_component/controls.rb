@@ -1,6 +1,7 @@
-require 'controls'
 require 'raygun_client/controls'
 require 'event_store/messaging/controls'
+
+require 'error_telemetry_component/client/controls'
 
 require 'error_telemetry_component/controls/time'
 require 'error_telemetry_component/controls/id'
@@ -16,6 +17,6 @@ require 'error_telemetry_component/controls/messages/record'
 require 'error_telemetry_component/controls/messages/recorded'
 require 'error_telemetry_component/controls/messages/published'
 require 'error_telemetry_component/controls/messages/lapsed'
-require 'error_telemetry_component/controls/record_error'
 require 'error_telemetry_component/controls/publish_error'
+require 'error_telemetry_component/controls/record_error'
 require 'error_telemetry_component/controls/handlers/recorded'

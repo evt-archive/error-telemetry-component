@@ -39,6 +39,9 @@ class Service
     event_subscription = EventStore::Messaging::Subscription.build '$ce-error', dispatcher
 
     cooperation = ProcessHost::Cooperation.build
+    cooperation.exception_notifier = -> process, error do
+      record_error error, process
+    end
 
     cooperation.register command_subscription, 'command-handlers'
     cooperation.register event_subscription, 'event-handlers'
@@ -46,6 +49,14 @@ class Service
     # TODO Still need name for this version of start [Scott, Sun Feb 7 2016]
     # TODO Would be good to have a shutdown message, but need atomic unit of work [Scott, Sun Feb 7 2016]
     cooperation.start!
+  end
+
+  def record_error(error, process)
+    logger.fatal "Uncaught exception (Process: #{process.inspect}, Error: #{error.message.inspect})"
+
+    logger.trace "Recording error (Process: #{process.inspect}, Error: #{error.message.inspect})"
+    ErrorTelemetryComponent::Client::Record.(error, service_name)
+    logger.debug "Recorded error (Process: #{process.inspect}, Error: #{error.message.inspect})"
   end
 
   def announce_start
