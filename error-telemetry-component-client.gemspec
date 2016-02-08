@@ -25,8 +25,9 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.bindir = 'bin'
 
-  s.add_runtime_dependency 'eventide'
   s.add_runtime_dependency 'controls'
+  s.add_runtime_dependency 'error_data'
+  s.add_runtime_dependency 'eventide'
   s.add_runtime_dependency 'serialize'
 end
 
