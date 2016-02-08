@@ -41,7 +41,10 @@ class Service
     cooperation = ProcessHost::Cooperation.build
     cooperation.exception_notifier = -> process, error do
       logger.fatal "Uncaught exception (Process: #{process.inspect}, Error: #{error.message.inspect})"
+
+      logger.trace "Recording error (Process: #{process.inspect}, Error: #{error.message.inspect})"
       ErrorTelemetryComponent::Client::Record.(error, service_name)
+      logger.debug "Recorded error (Process: #{process.inspect}, Error: #{error.message.inspect})"
     end
 
     cooperation.register command_subscription, 'command-handlers'
