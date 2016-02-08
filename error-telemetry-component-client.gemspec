@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.files = [
+    'lib/error_telemetry_component/client.rb',
     'lib/error_telemetry_component/client/record.rb',
     'lib/error_telemetry_component/messages/commands/record.rb',
     'lib/error_telemetry_component/host_info.rb',
