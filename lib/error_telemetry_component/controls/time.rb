@@ -1,5 +1,5 @@
 module ErrorTelemetryComponent
   module Controls
-    Time = ::Controls::Time
+    Time = Client::Controls::Time
   end
 end
