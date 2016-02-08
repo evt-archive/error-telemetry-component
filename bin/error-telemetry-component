@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
 require_relative '../init'
+require_relative './service'
+
+Service.start
 
 require 'process_host'
 
@@ -13,4 +16,6 @@ cooperation = ProcessHost::Cooperation.build
 cooperation.register command_subscription, 'command-handlers'
 cooperation.register event_subscription, 'event-handlers'
 
+# TODO Still need name for this version of start [Scott, Sun Feb 7 2016]
+# TODO Would be good to have a shutdown message, but need atomic unit of work [Scott, Sun Feb 7 2016]
 cooperation.start!
