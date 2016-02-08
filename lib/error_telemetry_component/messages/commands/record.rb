@@ -7,7 +7,7 @@ module ErrorTelemetryComponent
         attribute :error_id
         attribute :error
         attribute :hostname
-        attribute :tags
+        attribute :source
         attribute :time
 
         def self.build(data=nil)

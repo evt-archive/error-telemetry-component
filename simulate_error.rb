@@ -1,12 +1,18 @@
-require_relative './test/test_init'
+ENV['CONSOLE_DEVICE'] ||= 'stdout'
+ENV['LOG_COLOR'] ||= 'on'
+ENV['LOGGER'] ||= 'on'
+ENV['LOG_LEVEL'] ||= 'debug'
 
-recent_error = ErrorTelemetryComponent::Controls::Error.example
-lapsed_error = ErrorTelemetryComponent::Controls::Error.example
+puts RUBY_DESCRIPTION
 
-record = ErrorTelemetryComponent::Record.build recent_error
-record.()
+require_relative './init.rb'
 
-record = ErrorTelemetryComponent::Record.build lapsed_error
-SubstAttr::Substitute.(:clock, record)
-record.clock.now = Controls::Time::Raw.example
+require 'error_telemetry_component/controls'
+
+Telemetry::Logger::AdHoc.activate
+
+source = ErrorTelemetryComponent::Controls::Source.example
+error = ErrorTelemetryComponent::Controls::Error.example
+
+record = ErrorTelemetryComponent::Record.build error, source
 record.()

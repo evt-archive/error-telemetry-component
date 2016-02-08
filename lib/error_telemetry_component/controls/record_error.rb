@@ -5,8 +5,9 @@ module ErrorTelemetryComponent
         substitutes = Array(substitute)
 
         error = ErrorTelemetryComponent::Controls::Error.example
+        source = Controls::Source.example
 
-        record_error = ErrorTelemetryComponent::Record.build(error)
+        record_error = ErrorTelemetryComponent::Record.build(error, source)
 
         substitutes.each do |name|
           SubstAttr::Substitute.(name, record_error)

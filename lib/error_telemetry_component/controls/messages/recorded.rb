@@ -10,6 +10,7 @@ module ErrorTelemetryComponent
 
           message.error_id = error_id
           message.hostname = Controls::Host.name
+          message.source = Controls::Source.example
           message.time = time
           message.error = Controls::ErrorData.example
 
@@ -21,6 +22,7 @@ module ErrorTelemetryComponent
 
           data[:error_id] = Controls::ID.example
           data[:hostname] = Controls::Host.name
+          data[:source] = Controls::Source.example
           data[:time] = Controls::Time.example
           data[:error] = ErrorData.data
 

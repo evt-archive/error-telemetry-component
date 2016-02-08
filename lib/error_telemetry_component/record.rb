@@ -8,15 +8,14 @@ module ErrorTelemetryComponent
     dependency :host_info, HostInfo
     dependency :writer, EventStore::Messaging::Writer
 
-    initializer :error_data, r(:tags, [])
+    initializer :error_data, :source
 
     category :error
 
-    def self.build(error, tags=nil)
-      tags = Array(tags)
+    def self.build(error, source=nil)
       error_data = convert_error(error)
 
-      new(error_data, tags).tap do |instance|
+      new(error_data, source).tap do |instance|
         Telemetry::Logger.configure instance
         Clock::UTC.configure instance
         Identifier::UUID::Random.configure instance
@@ -25,8 +24,8 @@ module ErrorTelemetryComponent
       end
     end
 
-    def self.call(error, tags)
-      instance = build(error, tags)
+    def self.call(error, source=nil)
+      instance = build(error, source)
       instance.()
     end
 
@@ -39,7 +38,7 @@ module ErrorTelemetryComponent
 
       command.error = error_data
 
-      command.tags = tags
+      command.source = source
 
       command.time = clock.iso8601
 
@@ -59,7 +58,7 @@ module ErrorTelemetryComponent
     module LogText
       module RecordCommand
         def self.call(command)
-          "Error ID: #{command.error_id}, Error Message: #{command.error.message}, Time: #{command.time}, Hostname: #{command.hostname})"
+          "Error ID: #{command.error_id}, Error Message: #{command.error.message}, Time: #{command.time}, Hostname: #{command.hostname}, Source: #{command.source})"
         end
       end
     end
