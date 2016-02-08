@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.bindir = 'bin'
 
   s.add_runtime_dependency 'controls'
+  s.add_runtime_dependency 'initializer'
   s.add_runtime_dependency 'error_data'
   s.add_runtime_dependency 'eventide'
 end
