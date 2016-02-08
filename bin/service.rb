@@ -39,6 +39,10 @@ class Service
     event_subscription = EventStore::Messaging::Subscription.build '$ce-error', dispatcher
 
     cooperation = ProcessHost::Cooperation.build
+    cooperation.exception_notifier = -> process, error do
+      logger.fatal "Uncaught exception (Process: #{process.inspect}, Error: #{error.message.inspect})"
+      ErrorTelemetryComponent::Client::Record.(error, service_name)
+    end
 
     cooperation.register command_subscription, 'command-handlers'
     cooperation.register event_subscription, 'event-handlers'
