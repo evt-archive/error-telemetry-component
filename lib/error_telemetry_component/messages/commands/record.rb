@@ -5,9 +5,10 @@ module ErrorTelemetryComponent
         include EventStore::Messaging::Message
 
         attribute :error_id
-        attribute :error
-        attribute :hostname
         attribute :time
+        attribute :source
+        attribute :hostname
+        attribute :error
 
         def self.build(data=nil)
           data ||= {}

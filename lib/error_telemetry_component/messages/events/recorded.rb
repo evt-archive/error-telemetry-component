@@ -6,20 +6,10 @@ module ErrorTelemetryComponent
         include Lapse
 
         attribute :error_id
-        attribute :error
-        attribute :hostname
         attribute :time
-
-        def self.___build(data)
-          new.tap do |instance|
-            SetAttributes.(instance, data, exclude: :error)
-
-            ## TODO Remove this. It should not be a complex object. [Scott, Sun Jan 31 2016]
-            error_data = ErrorData.build data['error']
-
-            instance.error = error_data
-          end
-        end
+        attribute :source
+        attribute :hostname
+        attribute :error
 
         def self.build(data=nil)
           data ||= {}

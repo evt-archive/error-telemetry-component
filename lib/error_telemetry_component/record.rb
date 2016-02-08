@@ -8,14 +8,14 @@ module ErrorTelemetryComponent
     dependency :host_info, HostInfo
     dependency :writer, EventStore::Messaging::Writer
 
-    initializer :error_data
+    initializer :error_data, :source
 
     category :error
 
-    def self.build(error)
-      error_data = import_error(error)
+    def self.build(error, source=nil)
+      error_data = convert_error(error)
 
-      new(error_data).tap do |instance|
+      new(error_data, source).tap do |instance|
         Telemetry::Logger.configure instance
         Clock::UTC.configure instance
         Identifier::UUID::Random.configure instance
@@ -24,8 +24,8 @@ module ErrorTelemetryComponent
       end
     end
 
-    def self.call(error)
-      instance = build(error)
+    def self.call(error, source=nil)
+      instance = build(error, source)
       instance.()
     end
 
@@ -38,6 +38,8 @@ module ErrorTelemetryComponent
 
       command.error = error_data
 
+      command.source = source
+
       command.time = clock.iso8601
 
       command_stream_name = command_stream_name(command.error_id)
@@ -49,14 +51,14 @@ module ErrorTelemetryComponent
       return command, command_stream_name
     end
 
-    def self.import_error(error)
+    def self.convert_error(error)
       ErrorData::Convert::Error.(error)
     end
 
     module LogText
       module RecordCommand
         def self.call(command)
-          "Error ID: #{command.error_id}, Error Message: #{command.error.message}, Time: #{command.time}, Hostname: #{command.hostname})"
+          "Error ID: #{command.error_id}, Error Message: #{command.error.message}, Time: #{command.time}, Hostname: #{command.hostname}, Source: #{command.source})"
         end
       end
     end

@@ -9,8 +9,9 @@ module ErrorTelemetryComponent
           message = ErrorTelemetryComponent::Messages::Events::Recorded.new
 
           message.error_id = error_id
-          message.hostname = Controls::Host.name
           message.time = time
+          message.source = Controls::Source.example
+          message.hostname = Controls::Host.name
           message.error = Controls::ErrorData.example
 
           message
@@ -20,8 +21,9 @@ module ErrorTelemetryComponent
           data = {}
 
           data[:error_id] = Controls::ID.example
-          data[:hostname] = Controls::Host.name
           data[:time] = Controls::Time.example
+          data[:source] = Controls::Source.example
+          data[:hostname] = Controls::Host.name
           data[:error] = ErrorData.data
 
           data

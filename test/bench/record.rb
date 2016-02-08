@@ -33,6 +33,13 @@ context "Recording an Error" do
       assert(read_hostname == recorded_hostname)
     end
 
+    test "source" do
+      recorded_source = record_error.source
+      read_source = read_data.data['source']
+
+      assert(read_source == recorded_source)
+    end
+
     test "time" do
       recorded_time = record_error.clock.iso8601
       read_time = read_data.data['time']
