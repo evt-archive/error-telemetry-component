@@ -5,14 +5,8 @@ ENV['LOG_LEVEL'] ||= 'debug'
 
 puts RUBY_DESCRIPTION
 
-require_relative './init.rb'
+require_relative '../init.rb'
 
 require 'error_telemetry_component/controls'
 
 Telemetry::Logger::AdHoc.activate
-
-source = ErrorTelemetryComponent::Controls::Source.example
-error = ErrorTelemetryComponent::Controls::Error.example
-
-record = ErrorTelemetryComponent::Record.build error, source
-record.()
