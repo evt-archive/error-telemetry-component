@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.summary = 'Error telemetry recording and publishing component'
   s.description = ' '
 
-  s.authors = ['Obsidian Software, Inc']
-  s.email = 'developers@obsidianexchange.com'
+  s.authors = ['The Eventide Project']
+  s.email = 'opensource@eventide-project.org'
   s.homepage = 'https://github.com/obsidian-btc/telemetry'
   s.licenses = ['Not licensed for public use']
 
