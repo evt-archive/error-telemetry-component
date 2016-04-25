@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.authors = ['The Eventide Project']
   s.email = 'opensource@eventide-project.org'
-  s.homepage = 'https://github.com/obsidian-btc/sms-gateway'
+  s.homepage = 'https://github.com/eventide-project/sms-gateway'
   s.licenses = ['Not licensed for public use']
 
   s.require_paths = ['lib']
